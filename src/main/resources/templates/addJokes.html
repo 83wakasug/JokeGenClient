@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<head>
+  <meta charset="UTF-8">
+  <title>create</title>
+  <link rel="stylesheet" th:href="@{/default.css}" >
+
+</head>
+<body>
+<nav>
+  <ul class="index">
+    <li><a href="http://localhost:8081/candy/index">Main page</a></li>
+    <li><a href="http://localhost:8081/candy/searchEntry">Search Entry</a></li>
+    <li><a href="http://localhost:8081/candy/all">List All Entries</a></li>
+    <li><a href="http://localhost:8081/candy/create">Create an Entry</a></li>
+    <li><a href="http://localhost:8081/candy/edit">Update/Delete an Entry</a></li>
+
+
+  </ul>
+</nav>
+
+<div>
+  <div>
+    <div>
+      <h2 id="h2">Jokes</h2>
+      <form th:action="@{/jokes/add}" th:object="${JokesForm}" method="post">
+        <div>
+          <label>Jokes</label>
+          <div>
+            <input
+                    type="text"
+                    name="jokes"
+                    th:field="*{jokes}"
+                    placeholder="Enter Joke"
+                    required
+            />
+          </div>
+        </div>
+
+        <div>
+          <label>Author</label>
+          <div>
+
+            <input
+                    type="text"
+                    name="Author"
+                    th:field="*{name}"
+                    placeholder="Enter Author name"
+                    required
+            />
+          </div>
+        </div>
+
+
+        <div class="form-buttons">
+          <div>
+            <button type="submit" class="btn btn-primary">Create</button>
+          </div>
+          <div>
+            <a th:href="@{/candy/create}" role="button"><button type="button"  class="btn btn-secondary">Cancel</button></a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div th:if="${successMessage}">
+  <p th:text="${successMessage}"></p>
+</div>
+
+</body>
+</html>

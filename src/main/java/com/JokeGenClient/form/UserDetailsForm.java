@@ -4,11 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoginResponse {
+public class UserDetailsForm {
+    int userId;
+    String username;
+    ArrayList<String> authorities;
 
-    private String username;
-    private String jwt;
 }
