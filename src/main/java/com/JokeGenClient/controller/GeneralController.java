@@ -3,7 +3,6 @@ package com.JokeGenClient.controller;
 import com.JokeGenClient.form.JokesForm;
 import com.JokeGenClient.form.LoginForm;
 import com.JokeGenClient.form.UserData;
-import com.JokeGenClient.form.UserDetailsForm;
 import com.JokeGenClient.service.GeneralService;
 import com.JokeGenClient.token.DecodeToken;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -37,7 +36,6 @@ public class GeneralController {
         model.addAttribute("login",login);
         String json= String.valueOf(generalService.login(login));
         createSessionData(json);
-
 
         return "index";
     }
