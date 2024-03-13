@@ -17,7 +17,7 @@ public class DecodeToken {
         return new String(Base64.getUrlDecoder().decode(encodedString));
     }
 
-    private String parseJason(String token,String fieldName){
+    public String parseJason(String token,String fieldName){
         String [] parts=splitToken(token);
         JSONObject contents = new JSONObject(decode(parts[payload]));
     return contents.optString(fieldName);

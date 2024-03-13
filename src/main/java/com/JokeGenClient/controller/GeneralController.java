@@ -2,16 +2,26 @@ package com.JokeGenClient.controller;
 
 import com.JokeGenClient.form.JokesForm;
 import com.JokeGenClient.form.LoginForm;
+import com.JokeGenClient.form.UserData;
+import com.JokeGenClient.form.UserDetailsForm;
+import com.JokeGenClient.service.GeneralService;
+import com.JokeGenClient.token.DecodeToken;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
+@SessionAttributes("userData")
 @RequestMapping("/jokes")
+@RequiredArgsConstructor
 public class GeneralController {
 
+    private final GeneralService generalService;
+    private final DecodeToken decode;
     @GetMapping("/login")
     public String getLogin() {
         return "index";
@@ -23,15 +33,27 @@ public class GeneralController {
     }
 
     @PostMapping("/login")
-    public String login(Model model, LoginForm login) {
+    public String login(Model model, @ModelAttribute @Validated LoginForm login) throws JsonProcessingException {
         model.addAttribute("login",login);
+        String json= String.valueOf(generalService.login(login));
+        createSessionData(json);
+
+
         return "index";
     }
 
     @PostMapping("/add")
-    public String addJoke(Model model, JokesForm jokesForm) {
+    public String addJoke(@ModelAttribute("userData")UserData userData,Model model, @ModelAttribute @Validated JokesForm jokesForm) {
         model.addAttribute("jokes", jokesForm);
+
+
         return "index";
+    }
+
+    public void createSessionData(String json) throws JsonProcessingException {
+        UserData user =new ObjectMapper().readValue(json,UserData.class);
+        user.setUsername(decode.parseJason(user.getToken(),"sub"));
+        user.setRoles(decode.parseJason(user.getToken(),"roles"));
     }
 
 }

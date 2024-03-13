@@ -27,7 +27,7 @@ public class GeneralService implements JokeGenInterface {
     @Override
     public ResponseEntity<?> postJokes(String jwtToken) {
         return restClient.post()
-                .uri("/jokes/{id}")
+                .uri("/jokes")
                 .headers(httpHeaders -> httpHeaders.addAll(tokenHeader.createHeader(jwtToken)))
                 .contentType(MediaType.APPLICATION_JSON)
                 .retrieve()
@@ -52,7 +52,7 @@ public class GeneralService implements JokeGenInterface {
     @Override
     public ResponseEntity<?> login(LoginForm login) {
         return restClient.post()
-                .uri("/",login)
+                .uri("/auth/login",login)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .body(login)
