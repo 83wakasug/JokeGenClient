@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 public class JokesDTO {
     int id;
     String joke;
-    AuthourForm authour;
+    AuthorForm authour;
 }

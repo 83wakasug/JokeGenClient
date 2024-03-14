@@ -9,7 +9,7 @@ public class Config {
     @Bean
     public RestClient restClient() {
         return RestClient.builder()
-                .baseUrl("localhost8081/api/v1")
+                .baseUrl("http://localhost:5000/api/v1")
                 .build();
     }
 }

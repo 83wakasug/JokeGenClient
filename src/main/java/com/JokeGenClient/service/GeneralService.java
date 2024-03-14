@@ -57,6 +57,6 @@ public class GeneralService implements JokeGenInterface {
                 .accept(MediaType.APPLICATION_JSON)
                 .body(login)
                 .retrieve()
-                .toEntity(LoginForm.class);
+                .toEntity(String.class);
     }
 }

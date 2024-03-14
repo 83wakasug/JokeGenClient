@@ -17,7 +17,7 @@ public class AuthorService implements AuthorInterface {
 
     private final RestClient restClient;
     private final Token tokenHeader;
-
+    private final String AUTHOR="/author";
     @Override
     public ResponseEntity<?> getAuthor(String jwtToken) {
         return restClient.get()
@@ -32,7 +32,7 @@ public class AuthorService implements AuthorInterface {
     public ResponseEntity<List> getAuthors(String jwtToken) {
 
             return restClient.get()
-                    .uri("/author")
+                    .uri("AUTHOR")
                     .headers(httpHeaders -> httpHeaders.addAll(tokenHeader.createHeader(jwtToken)))
                     .accept(MediaType.APPLICATION_JSON)
                     .retrieve()
@@ -44,7 +44,7 @@ public class AuthorService implements AuthorInterface {
     @Override
     public ResponseEntity<?> addAuthor(String jwtToken) {
          return restClient.get()
-                .uri("/author")
+                .uri("AUTHOR")
                 .headers(httpHeaders -> httpHeaders.addAll(tokenHeader.createHeader(jwtToken)))
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
