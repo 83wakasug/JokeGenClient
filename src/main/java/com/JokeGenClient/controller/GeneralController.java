@@ -2,7 +2,7 @@ package com.JokeGenClient.controller;
 
 import com.JokeGenClient.form.JokesForm;
 import com.JokeGenClient.form.UserData;
-import com.JokeGenClient.service.GeneralService;
+import com.JokeGenClient.service.AuthService;
 import com.JokeGenClient.token.DecodeToken;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class GeneralController {
 
-    private final GeneralService generalService;
+    private final AuthService generalService;
     private final DecodeToken decode;
 
     @GetMapping("/index")

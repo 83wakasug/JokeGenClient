@@ -3,7 +3,7 @@ package com.JokeGenClient.controller;
 import com.JokeGenClient.form.LoginForm;
 import com.JokeGenClient.form.SignupForm;
 import com.JokeGenClient.form.UserData;
-import com.JokeGenClient.service.GeneralService;
+import com.JokeGenClient.service.AuthService;
 import com.JokeGenClient.token.DecodeToken;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,11 +19,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/jokes")
 @RequiredArgsConstructor
 public class LoginController {
-    private final GeneralService generalService;
+    private final AuthService authService;
     private final DecodeToken decode;
 
     @GetMapping("/login")
-    public String getLogin(Model model,@ModelAttribute @Validated LoginForm login) {
+    public String loginView(Model model,@ModelAttribute @Validated LoginForm login) {
         model.addAttribute("login",login);return "login";
     }
 
@@ -31,7 +31,7 @@ public class LoginController {
     public String login(Model model, @ModelAttribute @Validated LoginForm login) throws JsonProcessingException {
         model.addAttribute("login",login);
 
-        ResponseEntity<?> response = generalService.login(login);
+        ResponseEntity<?> response = authService.login(login);
         if (response.getStatusCode().is2xxSuccessful()) {
             // Get the response body
             Object responseBody = response.getBody();
@@ -51,8 +51,18 @@ public class LoginController {
     }
 
     @GetMapping("/signup")
+    public String signupView(Model model,@ModelAttribute @Validated SignupForm signupForm) {
+        model.addAttribute("signup", signupForm);return "signup";
+
+
+    }
+
+    @PostMapping("/signup")
     public String signup(Model model,@ModelAttribute @Validated SignupForm signupForm) {
         model.addAttribute("signup", signupForm);return "signup";
+        authService.
+
+
     }
 
 

@@ -12,7 +12,7 @@ import org.springframework.web.client.RestClient;
 
 @Service
 @RequiredArgsConstructor
-public class GeneralService implements JokeGenInterface {
+public class AuthService implements JokeGenInterface {
 
     private final RestClient restClient;
     private final Token tokenHeader;
@@ -51,6 +51,17 @@ public class GeneralService implements JokeGenInterface {
 
     @Override
     public ResponseEntity<?> login(LoginForm login) {
+        return restClient.post()
+                .uri("/auth/login",login)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .body(login)
+                .retrieve()
+                .toEntity(String.class);
+    }
+
+    @Override
+    public ResponseEntity<?> signup(LoginForm login) {
         return restClient.post()
                 .uri("/auth/login",login)
                 .contentType(MediaType.APPLICATION_JSON)
