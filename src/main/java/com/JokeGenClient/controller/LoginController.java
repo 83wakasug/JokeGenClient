@@ -38,12 +38,15 @@ public class LoginController {
             if (responseBody != null) {
                 // Convert the response body to a string
                 String json = responseBody.toString();
-                createSessionData(json);
+               UserData userData= createSessionData(json);
+                model.addAttribute("userData", userData);
             } else {
                 System.out.println("Response body is null");
+                return "error";
             }
         } else {
             System.out.println("Login request failed with status code: " + response.getStatusCodeValue());
+            return "error";
         }
 
 
@@ -54,23 +57,28 @@ public class LoginController {
     public String signupView(Model model,@ModelAttribute @Validated SignupForm signupForm) {
         model.addAttribute("signup", signupForm);return "signup";
 
-
     }
 
     @PostMapping("/signup")
     public String signup(Model model,@ModelAttribute @Validated SignupForm signupForm) {
-        model.addAttribute("signup", signupForm);return "signup";
-        authService.
-
-
+        model.addAttribute("signup", signupForm);
+        System.out.println(signupForm.getPassword()+signupForm.getUsername());
+        var response = authService.signup(signupForm);
+        if (response.getStatusCode().is2xxSuccessful()) {
+            // 登録成功時のフラッシュメッセージ
+            return "redirect:/jokes/login?success=User successfully registered!";
+        } else {
+            // 登録失敗時のフラッシュメッセージ
+            return "redirect:/jokes/login?error=User registration failed. Please try again.";
+        }
     }
 
 
-    public void createSessionData(String json) throws JsonProcessingException {;
+    public UserData createSessionData(String json) throws JsonProcessingException {;
         UserData user =new ObjectMapper().readValue(json,UserData.class);
         user.setUsername(decode.parseJason(user.getToken(),"sub"));
         user.setRoles(decode.parseJason(user.getToken(),"roles"));
-
+        return user;
     }
 
 }

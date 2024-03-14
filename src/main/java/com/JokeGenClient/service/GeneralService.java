@@ -1,47 +1,44 @@
 package com.JokeGenClient.service;
 
-import com.JokeGenClient.client.AuthInterface;
 import com.JokeGenClient.client.JokeGenInterface;
 import com.JokeGenClient.form.JokesForm;
-import com.JokeGenClient.form.LoginForm;
-import com.JokeGenClient.form.SignupForm;
 import com.JokeGenClient.token.Token;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
-
 @Service
 @RequiredArgsConstructor
-public class AuthService implements AuthInterface {
-
+public class GeneralService implements JokeGenInterface {
     private final RestClient restClient;
     private final Token tokenHeader;
 
-
-
-
     @Override
-    public ResponseEntity<?> login(LoginForm login) {
-        return restClient.post()
-                .uri("/auth/login",login)
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
-                .body(login)
-                .retrieve()
-                .toEntity(String.class);
+    public ResponseEntity<?> getJokes(String jwtToken) {
+        return null;
     }
 
+    @Override
+    public ResponseEntity<?> postJokes(String jwtToken) {
+        return restClient.post()
+                .uri("/jokes")
+                .headers(httpHeaders -> httpHeaders.addAll(tokenHeader.createHeader(jwtToken)))
+                .contentType(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .toEntity(JokesForm.class);
+    }
 
     @Override
-    public ResponseEntity<?> signup(SignupForm signupForm) {
-        return restClient.post()
-                .uri("/auth/register",signupForm)
-                .contentType(MediaType.APPLICATION_JSON)
+    public ResponseEntity<?> getAJokes(int id,String jwtToken) {
+
+        return restClient.get()
+                .uri("/jokes/{id}")
+                .headers(httpHeaders -> httpHeaders.addAll(tokenHeader.createHeader(jwtToken)))
                 .accept(MediaType.APPLICATION_JSON)
-                .body(signupForm)
                 .retrieve()
-                .toEntity(String.class);
+                .toEntity(JokesForm.class);
+
+
     }
 }

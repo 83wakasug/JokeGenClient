@@ -21,7 +21,6 @@ public interface JokeGenInterface {
     ResponseEntity<?> getAJokes(@PathVariable int id,String jwtToken);
 
 
-    @PostExchange("/jokes/login")
-    ResponseEntity<?> login(LoginForm login);
+
 
 }
