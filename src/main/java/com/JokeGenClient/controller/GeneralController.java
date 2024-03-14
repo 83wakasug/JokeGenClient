@@ -20,7 +20,7 @@ public class GeneralController {
     private final DecodeToken decode;
 
     @GetMapping("/index")
-    public String index() {
+    public String index(@ModelAttribute("userData")UserData userData ) {
         return "index";
     }
     @GetMapping("/create")

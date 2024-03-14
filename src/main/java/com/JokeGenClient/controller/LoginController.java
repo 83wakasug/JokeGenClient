@@ -1,6 +1,7 @@
 package com.JokeGenClient.controller;
 
 import com.JokeGenClient.form.LoginForm;
+import com.JokeGenClient.form.SignupForm;
 import com.JokeGenClient.form.UserData;
 import com.JokeGenClient.service.GeneralService;
 import com.JokeGenClient.token.DecodeToken;
@@ -48,6 +49,12 @@ public class LoginController {
 
         return "redirect:/jokes/index";
     }
+
+    @GetMapping("/signup")
+    public String signup(Model model,@ModelAttribute @Validated SignupForm signupForm) {
+        model.addAttribute("signup", signupForm);return "signup";
+    }
+
 
     public void createSessionData(String json) throws JsonProcessingException {;
         UserData user =new ObjectMapper().readValue(json,UserData.class);

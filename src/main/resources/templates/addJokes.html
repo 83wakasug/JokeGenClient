@@ -13,9 +13,9 @@
     <li><a href="http://localhost:8080/jokes/searchEntry">Search Entry</a></li>
     <li><a href="http://localhost:8080/jokes/all">List All Entries</a></li>
     <li><a href="http://localhost:8080/jokes/create">Create an Entry</a></li>
-    <li><a href="http://localhost:808/jokes/edit">Update/Delete an Entry</a></li>
-
-
+    <div th:switch="${userData.role}" th:case="ADMIN">
+      <li><a href="http://localhost:808/jokes/edit">Update/Delete an Entry</a></li>
+    </div>
   </ul>
 </nav>
 

@@ -9,9 +9,9 @@ import java.util.ArrayList;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDetailsForm {
-    int userId;
+public class SignupForm {
+
     String username;
-    ArrayList<String> authorities;
+    String password;
 
 }

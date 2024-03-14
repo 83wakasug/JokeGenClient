@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>signup</title>
+</head>
+<body>
+<div>
+
+    <form th:action = "@{/signup}" method="post" th:object="${signupForm}">
+        <div class="form-group">
+            <div class="col-3 col-md-2 col-xxl-1">
+                <p> Login ID</p>
+                    <input class="form-control" type="text" th:field ="*{username}">
+            </div>
+            <span class ="text-bg-danger" th:if="${#fields.hasErrors('loginId')}" th:errors="*{username}"></span>
+            <div class="col-3 col-md-2 col-xxl-1">
+                <p>Password</p>
+                    <input class="form-control" type="password" th:field = "*{password}">
+            </div>
+            <span class ="text-bg-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+        </div>
+
+        <div>
+            <input class="btn btn-primary" type = "submit" value="sign up">
+        </div>
+    </form>
+</div>
+<a th:href="@{/jokes/login}">Go back to Login</a>
+</body>
+</html>
