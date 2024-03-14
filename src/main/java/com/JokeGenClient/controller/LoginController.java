@@ -7,6 +7,7 @@ import com.JokeGenClient.service.AuthService;
 import com.JokeGenClient.token.DecodeToken;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -21,14 +22,14 @@ import org.springframework.web.bind.annotation.*;
 public class LoginController {
     private final AuthService authService;
     private final DecodeToken decode;
-
+    private final String ERRORMSG="wrong username or password";
     @GetMapping("/login")
     public String loginView(Model model,@ModelAttribute @Validated LoginForm login) {
         model.addAttribute("login",login);return "login";
     }
 
     @PostMapping("/login")
-    public String login(Model model, @ModelAttribute @Validated LoginForm login) throws JsonProcessingException {
+    public String login(Model model, @ModelAttribute @Validated LoginForm login, HttpSession session) throws JsonProcessingException {
         model.addAttribute("login",login);
 
         ResponseEntity<?> response = authService.login(login);
@@ -38,19 +39,21 @@ public class LoginController {
             if (responseBody != null) {
                 // Convert the response body to a string
                 String json = responseBody.toString();
-               UserData userData= createSessionData(json);
+                UserData userData = createSessionData(json);
                 model.addAttribute("userData", userData);
+                return "redirect:/jokes/index";
             } else {
-                System.out.println("Response body is null");
-                return "error";
+                model.addAttribute("errorMsg", "Login request failed with status code: " + response.getStatusCodeValue());
+                System.out.println("Login request failed with status code: " + response.getStatusCodeValue());
+
             }
         } else {
-            System.out.println("Login request failed with status code: " + response.getStatusCodeValue());
-            return "error";
+            model.addAttribute("errorMsg", "Invalid username or password");
+            System.out.println("Invalid username or password");
+
         }
+        return "login";
 
-
-        return "redirect:/jokes/index";
     }
 
     @GetMapping("/signup")
