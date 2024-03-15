@@ -2,8 +2,6 @@ package com.JokeGenClient.service;
 
 import com.JokeGenClient.client.JokeGenInterface;
 import com.JokeGenClient.form.AddJokesForm;
-import com.JokeGenClient.form.AuthorForm;
-import com.JokeGenClient.form.JokesDTO;
 import com.JokeGenClient.form.JokesForm;
 import com.JokeGenClient.token.Token;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +9,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
-
 import java.util.List;
 
 @Service
