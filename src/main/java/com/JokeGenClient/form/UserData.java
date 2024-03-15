@@ -16,10 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UserData {
 
-    @ModelAttribute("userData")
-    public UserData createUserData() {
-        return new UserData();
-    }
+
 
     @JsonProperty("jwt")
     String token;

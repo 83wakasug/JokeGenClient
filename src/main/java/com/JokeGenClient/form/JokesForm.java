@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class JokesForm {
 
-    String joke;
-    String name;
+    int id;
+    String author;
 }

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AuthorList</title>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th> AuthorID </th>
+        <th> AuthorName </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${author.empty}">
+        <td colspan="2"> Do not find any information </td>
+    </tr>
+    <tr th:each="author : ${author}">
+        <td><span th:text="${author.id}"> ID </span></td>
+        <td><span th:text="${author.name}"> ManufacturingCompany </span></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

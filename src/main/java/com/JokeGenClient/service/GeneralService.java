@@ -1,6 +1,7 @@
 package com.JokeGenClient.service;
 
 import com.JokeGenClient.client.JokeGenInterface;
+import com.JokeGenClient.form.JokesDTO;
 import com.JokeGenClient.form.JokesForm;
 import com.JokeGenClient.token.Token;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +9,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
+
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class GeneralService implements JokeGenInterface {
@@ -15,8 +19,13 @@ public class GeneralService implements JokeGenInterface {
     private final Token tokenHeader;
 
     @Override
-    public ResponseEntity<?> getJokes(String jwtToken) {
-        return null;
+    public ResponseEntity<List> getJokes(String jwtToken) {
+        return restClient.get()
+                .uri("/jokes")
+                .headers(httpHeaders -> httpHeaders.addAll(tokenHeader.createHeader(jwtToken)))
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .toEntity(List.class);
     }
 
     @Override

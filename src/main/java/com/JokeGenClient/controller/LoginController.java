@@ -51,7 +51,7 @@ public class LoginController {
                 // Convert the response body to a string
                 String json = responseBody.toString();
                 UserData userData = createSessionData(json);
-                model.addAttribute("userData", userData);
+                session.setAttribute("userData", userData);
                 return "redirect:/jokes/index";
             }
         }
@@ -68,13 +68,10 @@ public class LoginController {
     @PostMapping("/signup")
     public String signup(Model model,@ModelAttribute @Validated SignupForm signupForm) {
         model.addAttribute("signup", signupForm);
-        System.out.println(signupForm.getPassword()+signupForm.getUsername());
         var response = authService.signup(signupForm);
         if (response.getStatusCode().is2xxSuccessful()) {
-            // 登録成功時のフラッシュメッセージ
             return "redirect:/jokes/login?success=User successfully registered!";
         } else {
-            // 登録失敗時のフラッシュメッセージ
             return "redirect:/jokes/login?error=User registration failed. Please try again.";
         }
     }
