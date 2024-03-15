@@ -15,22 +15,20 @@ import java.util.List;
 public interface AuthorInterface {
 
 
-
-
-    @GetExchange("/{id}")
+    @GetExchange("/author/{id}")
     ResponseEntity<?> getAuthor(String jwtToken);
 
-    @GetExchange
+    @GetExchange("/author")
     ResponseEntity<List> getAuthors(String jwtToken);
 
 
-    @PostExchange("/")
-    ResponseEntity<?> addAuthor(String jwtToken, JokesForm jokesForm);
+    @PostExchange("/author")
+    ResponseEntity<?> addAuthor(String jwtToken, AuthorForm authorForm);
 
-    @DeleteExchange("/{id}")
+    @DeleteExchange("/author/{id}")
     ResponseEntity<?> deleteAuthor(String jwtToken);
 
-    @PutExchange("/{id}")
+    @PutExchange("/author/{id}")
     ResponseEntity<?> updateAuthor(String jwtToken);
 
 }

@@ -44,13 +44,15 @@ public class AuthorService implements AuthorInterface {
 
 
     @Override
-    public ResponseEntity<?> addAuthor(String jwtToken, JokesForm jokesForm) {
+    public ResponseEntity<?> addAuthor(String jwtToken, AuthorForm authorForm) {
          return restClient.post()
-                .uri("AUTHOR")
+                .uri(AUTHOR)
                 .headers(httpHeaders -> httpHeaders.addAll(tokenHeader.createHeader(jwtToken)))
                 .accept(MediaType.APPLICATION_JSON)
+                 .contentType(MediaType.APPLICATION_JSON)
+                 .body(authorForm)
                 .retrieve()
-                .toEntity(AuthorForm.class);
+                .toEntity(AuthorDTO.class);
     }
 
     @Override
