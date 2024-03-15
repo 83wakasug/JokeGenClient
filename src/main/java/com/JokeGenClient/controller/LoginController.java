@@ -9,11 +9,13 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
 
 @Controller
 @SessionAttributes("userData")
@@ -30,9 +32,18 @@ public class LoginController {
 
     @PostMapping("/login")
     public String login(Model model, @ModelAttribute @Validated LoginForm login, HttpSession session) throws JsonProcessingException {
-        model.addAttribute("login",login);
+        model.addAttribute("login", login);
 
-        ResponseEntity<?> response = authService.login(login);
+        ResponseEntity<?> response = null;
+        try {
+            response = authService.login(login);
+        } catch (HttpClientErrorException e) {
+            if (e.getStatusCode().equals(HttpStatus.UNAUTHORIZED)) {
+                model.addAttribute("errorMsg", "Wrong username or Password");
+                return "login";
+            }
+        }
+
         if (response.getStatusCode().is2xxSuccessful()) {
             // Get the response body
             Object responseBody = response.getBody();
@@ -42,18 +53,10 @@ public class LoginController {
                 UserData userData = createSessionData(json);
                 model.addAttribute("userData", userData);
                 return "redirect:/jokes/index";
-            } else {
-                model.addAttribute("errorMsg", "Login request failed with status code: " + response.getStatusCodeValue());
-                System.out.println("Login request failed with status code: " + response.getStatusCodeValue());
-
             }
-        } else {
-            model.addAttribute("errorMsg", "Invalid username or password");
-            System.out.println("Invalid username or password");
-
         }
-        return "login";
 
+        return "login";
     }
 
     @GetMapping("/signup")
