@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Authority</title>
+</head>
+<body>
+<div th:if="${validationError}" th:each="error : ${validationError}">
+    <label class="text-danger" th:text="${error}"></label>
+</div>
+
+<form th:action="@{data/{id}}" th:object="${user}" th:method="post">
+    <input type="hidden" th:field="*{id}" />
+
+    <table>
+
+        <tr>
+            <td>Id<span class="text-danger"></span></td>
+            <td><span th:text="${user.id}"> </span></td>
+        </tr>
+        <tr>
+            <td>Username</td>
+            <td><span th:text="${user.name}"> </span></td>
+        </tr>
+        <tr>
+        <tr th:if="${user.username eq 'Admin'}">
+            <td>Authority<span class="text-danger">※</span></td>
+            <td><span th:text="${user.authority}"></span></td>
+        </tr>
+        <tr th:unless="${user.username eq 'Admin'}">
+            <td>Authority<span class="text-danger">※</span></td>
+            <td>
+                <select th:field="*{user.authority}" required>
+                    <option value="0">User</option>
+                    <option value="1">Admin</option>
+                </select>
+            </td>
+        </tr>
+        </tr>
+    </table>
+
+    <br/>
+    <div>
+        <input type="submit" value="Save" class="btn btn-primary">
+    </div>
+</form>
+</div>
+</body>
+</html>

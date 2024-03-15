@@ -8,34 +8,24 @@ import org.springframework.web.service.annotation.PutExchange;
 
 public interface AdminInterface {
 
-    @PutExchange("/")
-    ResponseEntity<?>updateJokes();
+    @PutExchange("/jokes")
+    ResponseEntity<?>updateJokes(String jwtToken);
 
-    @PutExchange("/{id}")
-    ResponseEntity<?>putAuthor();
+    @DeleteExchange("/jokes/{id}")
+    ResponseEntity<?> deleteJokes(@PathVariable int id,String jwtToken);
 
-    @DeleteExchange("/{id}")
-    ResponseEntity<?> deleteJokes(@PathVariable int id);
+    @DeleteExchange("/author/{id}")
+    ResponseEntity<?> deleteAuthor(@PathVariable int id,String jwtToken);
+    @GetExchange("/admin/{id}")
+    ResponseEntity<?>getAUser(String jwtToken);
+    @GetExchange("/admin/")
+    ResponseEntity<?>getAUsers(String jwtToken);
 
-    @DeleteExchange("/{id}")
-    ResponseEntity<?> deleteAuthor(@PathVariable int id);
+    @DeleteExchange("admin/{id}")
+    ResponseEntity<?> deleteAUser(@PathVariable int id,String jwtToken);
 
-    @GetExchange("/")
-    ResponseEntity<?>getAllUsers();
-    @GetExchange("/{id}")
-    ResponseEntity<?>getAUser();
-
-
-    @DeleteExchange("/{id}")
-    ResponseEntity<?> deleteAUser(@PathVariable int id);
-
-    @PutExchange("/{id}")
-    ResponseEntity<?> updateAUser(@PathVariable int id);
-
-    @GetExchange("/random")
-    ResponseEntity<?> generateRandomJokes();
-
-
+    @PutExchange("admin/{id}")
+    ResponseEntity<?> updateAUser(@PathVariable int id,String jwtToken);
 
 
 }

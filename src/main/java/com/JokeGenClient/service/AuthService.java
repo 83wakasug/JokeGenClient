@@ -20,8 +20,6 @@ public class AuthService implements AuthInterface {
     private final Token tokenHeader;
 
 
-
-
     @Override
     public ResponseEntity<?> login(LoginForm login) {
         return restClient.post()

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th> AuthorID </th>
+        <th> AuthorName </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${users.empty}">
+        <td colspan="2"> Do not find any information </td>
+    </tr>
+
+    <tr th:each="user : ${users}">
+        <form th:action="@{jokes/delete/{id}(id=${users.id})}"  method="get">
+            <td><span th:text="${user.id}"> ID </span></td>
+            <td><span th:text="${user.name}"> username </span></td>
+            <td><span th:text="${user.authority}"> authority </span></td>
+            <td>
+                <a class="btn edit-btn"
+                   th:href="@{jokes/edit/{id} (id=${user.id})}">Edit</a>
+
+                <a class="btn delete-btn"
+                   th:href="@{jokes/delete/{id} (id=${user.id})}">Delete</a>
+            </td>
+        </form>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

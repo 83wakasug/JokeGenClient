@@ -15,7 +15,6 @@ import java.util.Collections;
 public class Token {
 
 
-
     public HttpHeaders createHeader(String token) {
         HttpHeaders headers = new HttpHeaders();
         headers.set(HttpHeaders.AUTHORIZATION, "Bearer " + token);
