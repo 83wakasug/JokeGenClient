@@ -49,7 +49,6 @@ public class GeneralController {
         try {
             model.addAttribute("joke", jokesForm);
 
-
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -62,19 +61,15 @@ public class GeneralController {
         try {
 
             model.addAttribute("joke", jokesForm);
-            System.out.println(jokesForm.getAuthor()+jokesForm.getJoke());
             AuthorDTO author = findAuthoer(jokesForm.getAuthor(), userData);
 
 
             int authorid;
-            if (author == null) {
-                System.out.println(author);
+            if (author.getName()==null) {
                 authorid = addAuthor(jokesForm, userData);
-                System.out.println(authorid+"authorid");
             }
              else{authorid = author.getId();}
             author.setId(authorid);
-            System.out.println(author.getId()+author.getName()+"test");
             generalService.postJokes(userData.getToken(), createAddJokesForm(jokesForm,authorid));
 
 
@@ -101,27 +96,23 @@ public class GeneralController {
                 }
             }
             for (AuthorDTO author : authorsList) {
-                System.out.println(author);
                 if (author.getName().equals(name)) {
-                    System.out.println(author);
                     return author;
                 }
             }
         } catch (Exception e) {
             // Handle the exception, log it, or perform any necessary actions
             System.out.println("An error occurred while finding the author: " + e.getMessage());
-            return null;
+
         }
-        return null;
+        return new AuthorDTO();
     }
 
     private int addAuthor(JokesForm jokesForm, UserData userdata) {
-        System.out.println(jokesForm.getAuthor()+"addAuthorbefore");
         AuthorForm authorForm = new AuthorForm();
         authorForm.setName(jokesForm.getAuthor());
         ResponseEntity<?> responseEntity = authorService.addAuthor(userdata.getToken(), authorForm);
         AuthorDTO authorDTO = (AuthorDTO) responseEntity.getBody();
-        System.out.println(authorDTO.getName()+"addAuthor");
         return authorDTO.getId();
     }
 
