@@ -36,6 +36,8 @@ public class GeneralService implements JokeGenInterface {
                 .uri("/jokes")
                 .headers(httpHeaders -> httpHeaders.addAll(tokenHeader.createHeader(jwtToken)))
                 .contentType(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(addJokesForm)
                 .retrieve()
                 .toEntity(AddJokesForm.class);
     }

@@ -73,7 +73,7 @@ public class GeneralController {
                 System.out.println(authorid+"authorid");
             }
              else{authorid = author.getId();}
-            author.setName(jokesForm.getAuthor());
+            author.setId(authorid);
             System.out.println(author.getId()+author.getName()+"test");
             generalService.postJokes(userData.getToken(), createAddJokesForm(jokesForm,authorid));
 
