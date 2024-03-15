@@ -1,5 +1,8 @@
 package com.JokeGenClient.client;
 
+import com.JokeGenClient.form.AuthorDTO;
+import com.JokeGenClient.form.AuthorForm;
+import com.JokeGenClient.form.JokesForm;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.service.annotation.DeleteExchange;
 import org.springframework.web.service.annotation.GetExchange;
@@ -22,7 +25,7 @@ public interface AuthorInterface {
 
 
     @PostExchange("/")
-    ResponseEntity<?> addAuthor(String jwtToken);
+    ResponseEntity<?> addAuthor(String jwtToken, JokesForm jokesForm);
 
     @DeleteExchange("/{id}")
     ResponseEntity<?> deleteAuthor(String jwtToken);

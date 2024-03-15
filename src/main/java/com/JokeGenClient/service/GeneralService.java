@@ -1,6 +1,8 @@
 package com.JokeGenClient.service;
 
 import com.JokeGenClient.client.JokeGenInterface;
+import com.JokeGenClient.form.AddJokesForm;
+import com.JokeGenClient.form.AuthorForm;
 import com.JokeGenClient.form.JokesDTO;
 import com.JokeGenClient.form.JokesForm;
 import com.JokeGenClient.token.Token;
@@ -29,13 +31,13 @@ public class GeneralService implements JokeGenInterface {
     }
 
     @Override
-    public ResponseEntity<?> postJokes(String jwtToken) {
+    public ResponseEntity<?> postJokes(String jwtToken, AddJokesForm addJokesForm) {
         return restClient.post()
                 .uri("/jokes")
                 .headers(httpHeaders -> httpHeaders.addAll(tokenHeader.createHeader(jwtToken)))
                 .contentType(MediaType.APPLICATION_JSON)
                 .retrieve()
-                .toEntity(JokesForm.class);
+                .toEntity(AddJokesForm.class);
     }
 
     @Override

@@ -7,9 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class JokesForm {
-
+public class AuthorDTO {
     int id;
-    String joke;
-    String author;
+    String name;
+
 }

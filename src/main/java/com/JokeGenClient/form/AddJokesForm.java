@@ -4,12 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.StringBufferInputStream;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class JokesForm {
+public class AddJokesForm {
 
-    int id;
     String joke;
-    String author;
+    int authorId;
+
 }

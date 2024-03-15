@@ -11,9 +11,9 @@
   <ul class="index">
     <li><a href="http://localhost:8080/jokes/index">Main page</a></li>
     <li><a href="http://localhost:8080/jokes/searchEntry">Search Entry</a></li>
-    <li><a href="http://localhost:8080/jokes/all">List All Entries</a></li>
+    <li><a href="http://localhost:8080/jokes/list">List All Entries</a></li>
     <li><a href="http://localhost:8080/jokes/create">Create an Entry</a></li>
-    <div th:switch="${userData.role}" th:case="ADMIN">
+    <div th:switch="${userData.roles}" th:case="ADMIN">
       <li><a href="http://localhost:808/jokes/edit">Update/Delete an Entry</a></li>
     </div>
   </ul>
@@ -23,14 +23,14 @@
   <div>
     <div>
       <h2 id="h2">Jokes</h2>
-      <form th:action="@{/jokes/add}" th:object="${JokesForm}" method="post">
+      <form th:action="@{/jokes/create}" th:object="${joke}" method="post">
         <div>
           <label>Jokes</label>
           <div>
             <input
                     type="text"
                     name="jokes"
-                    th:field="*{jokes}"
+                    th:field="*{joke}"
                     placeholder="Enter Joke"
                     required
             />
@@ -44,7 +44,7 @@
             <input
                     type="text"
                     name="Author"
-                    th:field="*{name}"
+                    th:field="*{author}"
                     placeholder="Enter Author name"
                     required
             />

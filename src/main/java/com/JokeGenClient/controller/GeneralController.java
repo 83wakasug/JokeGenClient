@@ -1,11 +1,8 @@
 package com.JokeGenClient.controller;
 
-import com.JokeGenClient.form.JokesDTO;
-import com.JokeGenClient.form.JokesForm;
-import com.JokeGenClient.form.UserData;
-import com.JokeGenClient.service.AuthService;
+import com.JokeGenClient.form.*;
+import com.JokeGenClient.service.AuthorService;
 import com.JokeGenClient.service.GeneralService;
-import com.JokeGenClient.token.DecodeToken;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -14,6 +11,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 @Controller
 @SessionAttributes("userData")
@@ -22,41 +21,92 @@ import java.util.ArrayList;
 public class GeneralController {
 
     private final GeneralService generalService;
-    private final DecodeToken decode;
+    private final AuthorService authorService;
 
     @GetMapping("/index")
-    public String index(@ModelAttribute("userData")UserData userData ) {
+    public String index(@ModelAttribute("userData") UserData userData) {
         return "index";
     }
 
     @GetMapping("/list")
-    public String jokesList(Model model,@ModelAttribute("userData")UserData userData, JokesDTO jokesDTO) {
+    public String jokesList(Model model, @ModelAttribute("userData") UserData userData, JokesDTO jokesDTO) {
 
         try {
-            ResponseEntity<?>responseEntity=generalService.getJokes(userData.getToken());
-            ArrayList<JokesDTO>jokesList= (ArrayList<JokesDTO>) responseEntity.getBody();
+            ResponseEntity<?> responseEntity = generalService.getJokes(userData.getToken());
+            ArrayList<JokesDTO> jokesList = (ArrayList<JokesDTO>) responseEntity.getBody();
             model.addAttribute("jokes", jokesList);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
         return "listJokes";
     }
+
     @GetMapping("/create")
-    public String getAJoke() {
+    public String getAJoke(Model model, @ModelAttribute("userData") UserData userData, JokesForm jokesForm) {
+        try {
+            model.addAttribute("joke", jokesForm);
+
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         return "addJokes";
     }
 
 
     @PostMapping("/create")
-    public String addJoke(@ModelAttribute("userData")UserData userData,Model model, @ModelAttribute @Validated JokesForm jokesForm) {
-        model.addAttribute("jokes", jokesForm);
+    public String addJoke(@ModelAttribute("userData") UserData userData, Model model, @ModelAttribute @Validated JokesForm jokesForm) {
+        try {
+
+            model.addAttribute("joke", jokesForm);
+            AuthorDTO author = findAuthoer(jokesForm.getAuthor(), userData);
+
+            int authorid = author.getId();
+            if (author == null) {
+                authorid = addAuthor(jokesForm, userData);
+            }
+
+            generalService.postJokes(userData.getToken(), createAddJokesForm(jokesForm,authorid));
 
 
-        return "login";
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return "addJokes";
     }
 
 
+    private AuthorDTO findAuthoer(String name, UserData userdata) {
+        ResponseEntity<List> responseEntity = authorService.getAuthors(userdata.getToken());
+        List<AuthorDTO> authorsList = new ArrayList<>();
+        List<?> responseBody = responseEntity.getBody();
+        //ArrayList<AuthorDTO> authorForms = (ArrayList<AuthorDTO>) responseEntity.getBody();
+        for (Object obj : responseBody) {
+            if (obj instanceof LinkedHashMap) {
+                LinkedHashMap<?, ?> map = (LinkedHashMap<?, ?>) obj;
+                AuthorDTO author = new AuthorDTO();
+                author.setId((Integer) map.get("id"));
+                author.setName((String) map.get("name"));
+                authorsList.add(author);
+            }
+        }
+        for (AuthorDTO author : authorsList) {
+            System.out.println(author);
+            if (author.getName().equals(name)) return author;
+        }
+        return null;
+    }
+
+    private int addAuthor(JokesForm jokesForm, UserData userdata) {
+        ResponseEntity<?> responseEntity = authorService.addAuthor(userdata.getToken(), jokesForm);
+        AuthorDTO authorDTO = (AuthorDTO) responseEntity.getBody();
+        return authorDTO.getId();
+    }
+
+    private AddJokesForm createAddJokesForm(JokesForm jokesForm,int authorid) {
+        return new AddJokesForm(jokesForm.getJoke(), authorid);
+    }
 
 }
