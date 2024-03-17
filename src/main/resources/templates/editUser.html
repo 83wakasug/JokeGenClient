@@ -13,6 +13,7 @@
         <li><a href="http://localhost:8080/jokes/create">Create an Entry</a></li>
         <div th:switch="${userData.roles}" th:case="ADMIN">
             <li><a href="http://localhost:808/jokes/edit">Update/Delete an Entry</a></li>
+            <li><a href="http://localhost:808/jokes/users">Update/Delete Users</a></li>
         </div>
     </ul>
 </nav>
@@ -21,7 +22,7 @@
     <label class="text-danger" th:text="${error}"></label>
 </div>
 
-<form th:action="@{data/{id}}" th:object="${user}" th:method="post">
+<form th:action="@{jokes/user/update/{id}(id=${users.id})}" th:object="${user}" th:method="post">
     <input type="hidden" th:field="*{id}" />
 
     <table>

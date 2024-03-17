@@ -34,7 +34,7 @@ public class UserController {
         return "userDetails";
     }
 
-    @DeleteMapping("/users")
+    @DeleteMapping("/user/delete/{id}")
     public String deleteUser(Model model, @ModelAttribute("userData") UserData userData,UserDTO user) {
 
         try {
@@ -48,7 +48,7 @@ public class UserController {
         return "userDetails";
     }
 
-    @PutMapping("/users")
+    @PutMapping("/user/update/{id}")
     public String updateUser(Model model, @ModelAttribute("userData") UserData userData,UserDTO user) {
 
         try {
