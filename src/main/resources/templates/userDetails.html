@@ -5,6 +5,18 @@
     <title>Title</title>
 </head>
 <body>
+<nav>
+    <ul class="index">
+        <li><a href="http://localhost:8080/jokes/index">Main page</a></li>
+        <li><a href="http://localhost:8080/jokes/searchEntry">Search Entry</a></li>
+        <li><a href="http://localhost:8080/jokes/list">List All Entries</a></li>
+        <li><a href="http://localhost:8080/jokes/create">Create an Entry</a></li>
+        <div th:switch="${userData.roles}" th:case="ADMIN">
+            <li><a href="http://localhost:808/jokes/auth/edit">Update/Delete an Entry</a></li>
+            <li><a href="http://localhost:808/jokes/auth/user">Update/Delete a User</a></li>
+        </div>
+    </ul>
+</nav>
 <table>
     <thead>
     <tr>

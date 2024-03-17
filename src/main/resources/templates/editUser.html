@@ -2,9 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>User Authority</title>
+    <title>User details</title>
 </head>
 <body>
+<nav>
+    <ul class="index">
+        <li><a href="http://localhost:8080/jokes/index">Main page</a></li>
+        <li><a href="http://localhost:8080/jokes/searchEntry">Search Entry</a></li>
+        <li><a href="http://localhost:8080/jokes/list">List All Entries</a></li>
+        <li><a href="http://localhost:8080/jokes/create">Create an Entry</a></li>
+        <div th:switch="${userData.roles}" th:case="ADMIN">
+            <li><a href="http://localhost:808/jokes/edit">Update/Delete an Entry</a></li>
+        </div>
+    </ul>
+</nav>
+
 <div th:if="${validationError}" th:each="error : ${validationError}">
     <label class="text-danger" th:text="${error}"></label>
 </div>
@@ -23,19 +35,13 @@
             <td><span th:text="${user.name}"> </span></td>
         </tr>
         <tr>
-        <tr th:if="${user.username eq 'Admin'}">
-            <td>Authority<span class="text-danger">※</span></td>
-            <td><span th:text="${user.authority}"></span></td>
-        </tr>
-        <tr th:unless="${user.username eq 'Admin'}">
             <td>Authority<span class="text-danger">※</span></td>
             <td>
                 <select th:field="*{user.authority}" required>
-                    <option value="0">User</option>
-                    <option value="1">Admin</option>
+                    <option value="0">Admin</option>
+                    <option value="1">User</option>
                 </select>
             </td>
-        </tr>
         </tr>
     </table>
 

@@ -1,17 +1,25 @@
 package com.JokeGenClient.service;
 
 import com.JokeGenClient.client.AdminInterface;
+import com.JokeGenClient.form.AuthorDTO;
+import com.JokeGenClient.form.AuthorForm;
+import com.JokeGenClient.form.UserDTO;
 import com.JokeGenClient.token.Token;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class AdminService implements AdminInterface {
     private final RestClient restClient;
     private final Token tokenHeader;
+    private final String ADMIN="/admin";
+    private final String ADMINID="/admin/{id}";
 
 
     @Override
@@ -31,17 +39,31 @@ public class AdminService implements AdminInterface {
 
     @Override
     public ResponseEntity<?> getAUser(String jwtToken) {
-        return null;
+        return restClient.get()
+                .uri(ADMINID)
+                .headers(httpHeaders -> httpHeaders.addAll(tokenHeader.createHeader(jwtToken)))
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .toEntity(UserDTO.class);
     }
 
     @Override
-    public ResponseEntity<?> getAUsers(String jwtToken) {
-        return null;
+    public ResponseEntity<List> getAUsers(String jwtToken) {
+       return restClient.get()
+                .uri(ADMIN)
+                .headers(httpHeaders -> httpHeaders.addAll(tokenHeader.createHeader(jwtToken)))
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .toEntity(List.class);
     }
 
     @Override
     public ResponseEntity<?> deleteAUser(int id,String jwtToken) {
-        return null;
+        return restClient.delete()
+                .uri("/{id}",id)
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .toEntity(UserDTO.class);
     }
 
     @Override

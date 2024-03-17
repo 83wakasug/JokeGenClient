@@ -16,7 +16,7 @@ public interface AuthorInterface {
 
 
     @GetExchange("/author/{id}")
-    ResponseEntity<?> getAuthor(String jwtToken);
+    ResponseEntity<?> getAuthor(String jwtToken,int id);
 
     @GetExchange("/author")
     ResponseEntity<List> getAuthors(String jwtToken);
@@ -26,9 +26,9 @@ public interface AuthorInterface {
     ResponseEntity<?> addAuthor(String jwtToken, AuthorForm authorForm);
 
     @DeleteExchange("/author/{id}")
-    ResponseEntity<?> deleteAuthor(String jwtToken);
+    ResponseEntity<?> deleteAuthor(String jwtToken,int id);
 
     @PutExchange("/author/{id}")
-    ResponseEntity<?> updateAuthor(String jwtToken);
+    ResponseEntity<?> updateAuthor(String jwtToken,int id);
 
 }

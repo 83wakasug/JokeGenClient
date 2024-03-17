@@ -3,6 +3,7 @@ package com.JokeGenClient.service;
 import com.JokeGenClient.client.AuthorInterface;
 import com.JokeGenClient.form.AuthorDTO;
 import com.JokeGenClient.form.AuthorForm;
+import com.JokeGenClient.form.UserDTO;
 import com.JokeGenClient.token.Token;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -19,7 +20,7 @@ public class AuthorService implements AuthorInterface {
     private final Token tokenHeader;
     private final String AUTHOR="/author";
     @Override
-    public ResponseEntity<?> getAuthor(String jwtToken) {
+    public ResponseEntity<?> getAuthor(String jwtToken,int id) {
         return restClient.get()
                 .uri("/author/{id}")
                 .headers(httpHeaders -> httpHeaders.addAll(tokenHeader.createHeader(jwtToken)))
@@ -54,12 +55,16 @@ public class AuthorService implements AuthorInterface {
     }
 
     @Override
-    public ResponseEntity<?> deleteAuthor(String jwtToken) {
-        return null;
+    public ResponseEntity<?> deleteAuthor(String jwtToken,int id) {
+        return restClient.delete()
+                .uri("/{id}",id)
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .toEntity(AuthorDTO.class);
     }
 
     @Override
-    public ResponseEntity<?> updateAuthor(String jwtToken) {
+    public ResponseEntity<?> updateAuthor(String jwtToken,int id) {
         return null;
     }
 }

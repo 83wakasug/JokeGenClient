@@ -49,6 +49,5 @@ public class GeneralService implements JokeGenInterface {
                 .retrieve()
                 .toEntity(JokesForm.class);
 
-
     }
 }
