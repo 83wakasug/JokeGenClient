@@ -13,4 +13,6 @@ public interface AuthInterface {
     @PostExchange("/jokes/register")
     ResponseEntity<?> signup(SignupForm signupForm);
 
+
+
 }

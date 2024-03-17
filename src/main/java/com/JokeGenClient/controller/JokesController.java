@@ -2,7 +2,7 @@ package com.JokeGenClient.controller;
 
 import com.JokeGenClient.form.*;
 import com.JokeGenClient.service.AuthorService;
-import com.JokeGenClient.service.GeneralService;
+import com.JokeGenClient.service.JokesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -17,9 +17,9 @@ import java.util.List;
 @SessionAttributes("userData")
 @RequestMapping("/jokes")
 @RequiredArgsConstructor
-public class GeneralController {
+public class JokesController {
 
-    private final GeneralService generalService;
+    private final JokesService generalService;
     private final AuthorService authorService;
 
     @GetMapping("/index")
