@@ -22,25 +22,32 @@
     <label class="text-danger" th:text="${error}"></label>
 </div>
 
-<form th:action="@{jokes/user/update/{id}(id=${user.userId})}" th:object="${user}" th:method="post">
-    <input type="hidden" th:field="*{userId}" />
+<form th:action="@{jokes/users/edit}"  th:method="post">
+
 
     <table>
 
         <tr>
             <td>Id<span class="text-danger"></span></td>
-            <td><span th:text="${user.userId}"> </span></td>
+            <td><span th:text="${userId}"> </span></td>
         </tr>
         <tr>
             <td>Username</td>
-            <td><span th:text="${user.username}"> </span></td>
+            <td><span th:text="${username}"> </span></td>
         </tr>
         <tr>
-            <td>Authority<span class="text-danger">※</span></td>
+            <td>Authority<span class="text-danger"></span></td>
             <td>
-                <select th:field="*{user.authority}" required>
-                    <option value="0">Admin</option>
-                    <option value="1">User</option>
+
+                <select multiple="multiple" th:field="*{authorities}" name="authorities" required>
+                    <option th:each="authority : ${user.authorities}"
+                            th:value="${authority.authority}"
+                            th:text="${authority.authority}"
+                            th:selected="${#lists.contains(user.authorities, authority)}">Admin</option>
+                    <option th:each="authority : ${user.authorities}"
+                            th:value="${authority.authority}"
+                            th:text="${authority.authority}"
+                            th:selected="${#lists.contains(user.authorities, authority)}">User</option>
                 </select>
             </td>
         </tr>

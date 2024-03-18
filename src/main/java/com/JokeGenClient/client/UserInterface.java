@@ -16,15 +16,14 @@ public interface UserInterface {
 
 
     @GetExchange("/admin/{id}")
-    ResponseEntity<?>getAUser(String jwtToken);
+    ResponseEntity<?>getAUser(String jwtToken,@PathVariable int id);
     @GetExchange("/admin/")
-    ResponseEntity<List>getAUsers(String jwtToken);
+    ResponseEntity<List>getUsers(String jwtToken);
 
     @DeleteExchange("/admin/{id}")
     ResponseEntity<?> deleteAUser(@PathVariable int id,String jwtToken);
 
     @PutExchange("/admin/{id}")
     ResponseEntity<?> updateAUser(@RequestBody UserDTO user, String jwtToken);
-
 
 }

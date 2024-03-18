@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -15,16 +17,16 @@ import java.util.List;
 
 @Controller
 @SessionAttributes("userData")
-@RequestMapping("/jokes")
+@RequestMapping("/jokes/users")
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
 
-    @GetMapping("/users")
-    public String User(Model model, @ModelAttribute("userData") UserData userData) {
+    @GetMapping("")
+    public String UserListView(Model model, @ModelAttribute("userData") UserData userData) {
 
         try {
-            ResponseEntity<?> responseEntity = userService.getAUsers(userData.getToken());
+            ResponseEntity<?> responseEntity = userService.getUsers(userData.getToken());
             List<UserDTO> users = (List<UserDTO>) responseEntity.getBody();
             model.addAttribute("users", users);
 
@@ -35,8 +37,28 @@ public class UserController {
         return "userDetails";
     }
 
-    @DeleteMapping("/user/delete/{id}")
-    public String deleteUser(Model model, @ModelAttribute("userData") UserData userData,UserDTO user) {
+    @GetMapping("/edit/{id}")
+    public String userEditView(Model model, @ModelAttribute("userData") UserData userData, @PathVariable int id, @ModelAttribute @Validated UserDTO user, BindingResult bindingResult) {
+
+        try {
+            ResponseEntity<?> responseEntity = userService.getAUser(userData.getToken(), id);
+            user = (UserDTO) responseEntity.getBody();
+            model.addAttribute("user", user);
+            model.addAttribute("userId", id);
+            model.addAttribute("authorities", user.getAuthorities());
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+
+        return "editUser";
+    }
+
+
+
+    @DeleteMapping("/delete/{id}")
+    public String deleteUser(Model model, @ModelAttribute("userData") UserData userData,@ModelAttribute @Validated UserDTO user) {
 
         try {
             model.addAttribute("user", user);
@@ -49,8 +71,8 @@ public class UserController {
         return "userDetails";
     }
 
-    @PutMapping("/user/update/{id}")
-    public String updateUser(Model model, @ModelAttribute("userData") UserData userData,UserDTO user) {
+    @PostMapping("/update")
+    public String updateUser(Model model, @ModelAttribute("userData") UserData userData,@ModelAttribute @Validated UserDTO user) {
 
         try {
             model.addAttribute("user", user);
@@ -60,7 +82,7 @@ public class UserController {
             System.out.println(e.getMessage());
         }
 
-        return "userDetails";
+        return "redirect:";
     }
 
 }

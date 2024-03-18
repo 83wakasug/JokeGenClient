@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.client.RestClient;
 
 import java.util.Collections;
@@ -27,7 +28,7 @@ public class UserService implements UserInterface {
 
 
     @Override
-    public ResponseEntity<?> getAUser(String jwtToken) {
+    public ResponseEntity<?> getAUser(String jwtToken, @PathVariable int id) {
         return restClient.get()
                 .uri(ADMINID)
                 .headers(httpHeaders -> httpHeaders.addAll(tokenHeader.createHeader(jwtToken)))
@@ -37,7 +38,7 @@ public class UserService implements UserInterface {
     }
 
     @Override
-    public ResponseEntity<List> getAUsers(String jwtToken) {
+    public ResponseEntity<List> getUsers(String jwtToken) {
        return restClient.get()
                 .uri(ADMIN)
                 .headers(httpHeaders -> httpHeaders.addAll(tokenHeader.createHeader(jwtToken)))
