@@ -78,6 +78,21 @@ public class JokesController {
         return "redirect:/jokes/list";
     }
 
+    @GetMapping("/edit/{id}")
+    public String updateJokesView(@ModelAttribute("userData") UserData userData, Model model, @ModelAttribute @Validated JokesForm jokesForm,@PathVariable int id) {
+        try {
+
+
+            ResponseEntity<?> responseEntity =generalService.getAJokes(id,userData.getToken());
+            jokesForm= (JokesForm) responseEntity.getBody();
+            model.addAttribute("joke", jokesForm);
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return "editJokes";
+    }
+
     @PostMapping("/edit")
     public String updateJokes(@ModelAttribute("userData") UserData userData, Model model, @ModelAttribute @Validated JokesForm jokesForm) {
         try {
