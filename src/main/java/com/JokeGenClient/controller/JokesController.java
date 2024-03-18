@@ -4,6 +4,7 @@ import com.JokeGenClient.form.*;
 import com.JokeGenClient.service.AuthorService;
 import com.JokeGenClient.service.JokesService;
 import lombok.RequiredArgsConstructor;
+import org.dozer.Mapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +22,7 @@ public class JokesController {
 
     private final JokesService generalService;
     private final AuthorService authorService;
-
+    private final Mapper mapper;
     @GetMapping("/index")
     public String index(@ModelAttribute("userData") UserData userData) {
         return "index";
@@ -79,12 +80,19 @@ public class JokesController {
     }
 
     @GetMapping("/edit/{id}")
-    public String updateJokesView(@ModelAttribute("userData") UserData userData, Model model, @ModelAttribute @Validated JokesForm jokesForm,@PathVariable int id) {
+    public String updateJokesView(@ModelAttribute("userData") UserData userData, Model model, @ModelAttribute @Validated JokesDTO jokesDTO,@PathVariable int id) {
         try {
 
 
             ResponseEntity<?> responseEntity =generalService.getAJokes(id,userData.getToken());
-            jokesForm= (JokesForm) responseEntity.getBody();
+
+            jokesDTO= (JokesDTO) responseEntity.getBody();
+            System.out.println(jokesDTO);
+            JokesForm jokesForm = new JokesForm();
+            mapper.map(jokesDTO,jokesForm);
+
+            jokesForm.setAuthor(jokesDTO.getAuthour().getName());
+            System.out.println(jokesForm);
             model.addAttribute("joke", jokesForm);
 
         } catch (Exception e) {

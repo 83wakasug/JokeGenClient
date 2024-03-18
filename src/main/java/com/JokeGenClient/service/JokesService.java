@@ -49,7 +49,7 @@ public class JokesService implements JokeGenInterface {
                 .headers(httpHeaders -> httpHeaders.addAll(tokenHeader.createHeader(jwtToken)))
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
-                .toEntity(JokesForm.class);
+                .toEntity(JokesDTO.class);
 
     }
 
@@ -63,7 +63,7 @@ public class JokesService implements JokeGenInterface {
                 .accept(MediaType.APPLICATION_JSON)
                 .body(author)
                 .retrieve()
-                .toEntity(AuthorDTO.class);
+                .toEntity(JokesDTO.class);
     }
 
     @Override

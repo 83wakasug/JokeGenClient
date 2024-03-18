@@ -24,7 +24,7 @@
 
 <form th:action="@{/jokes/edit}" th:object="${joke}"  th:method="post">
   <input type="hidden"  name="id" th:value="${joke.id}" />
-  <input type="hidden" name="author" th:value="${joke.author}" />
+  <input type="hidden" name="name" th:value="${joke.author}" />
 
   <table>
 
@@ -34,13 +34,13 @@
     </tr>
     <tr>
       <td>Joke</td>
-      <td><input type="text" required th:field="*{joke}" /> </span></td>
+      <td><span><input type="text" required th:field="*{joke}" /> </span></td>
 
     </tr>
     <tr>
       <td>Author<span class="text-danger"></span></td>
       <td>
-        <span th:text="${author}"> </span>
+       <span> <input type="text" required th:field="*{author}" /> </span>
       </td>
     </tr>
   </table>
