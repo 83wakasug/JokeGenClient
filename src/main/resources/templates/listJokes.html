@@ -34,6 +34,16 @@
         <td><span th:text="${jokes.joke}"> joke </span></td>
         <td><span th:text="${jokes.author.name}"> author </span></td>
     </tr>
+    <div th:switch="${user.username}">
+        <p th:case="admin" style="display:none"> <!-- ADMINの場合は表示にする -->
+            <a class="btn edit-btn" th:href="@{/jokes/users/edit/{id}(id=${user.userId})}" >Edit</a>
+            <a class="btn delete-btn" th:href="@{/users/delete/{id} (id=${user.userId})}" >Delete</a>
+        </p>
+        <p th:case="*"> <!-- その他の場合は非表示にする -->
+            <a class="btn edit-btn" th:href="@{/jokes/users/edit/{id}(id=${user.userId})}" style="display:none">Edit</a>
+            <a class="btn delete-btn" th:href="@{/jokes/users/delete/{id} (id=${user.userId})} " style="display:none">Delete</a>
+        </p>
+    </div>
     </tbody>
 </table>
 </body>
