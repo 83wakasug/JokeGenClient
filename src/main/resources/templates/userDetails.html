@@ -33,18 +33,24 @@
         <form th:action="@{jokes/delete/{id}(id=${user.userId})}"  method="get">
             <td><span th:text="${user.userId}"> ID </span></td>
             <td><span th:text="${user.username}"> username </span></td>
-
+            <!-- 権限を表示するセル -->
             <td>
                 <ul>
-                <li th:each="authority : ${user.authorities}" th:text="${authority.authority}"> authority</li>
+                    <li th:each="authority : ${user.authorities}" th:text="${authority.authority}"> authority</li>
                 </ul>
             </td>
+            <!-- 削除ボタンを含むセル -->
             <td>
-                <a class="btn edit-btn"
-                   th:href="@{jokes/edit/{id} (id=${user.userId})}">Edit</a>
-
-                <a class="btn delete-btn"
-                   th:href="@{jokes/delete/{id} (id=${user.userId})}">Delete</a>
+                <div th:switch="${user.username}">
+                    <p th:case="admin" style="display:none"> <!-- ADMINの場合は非表示にする -->
+                        <a class="btn edit-btn" th:href="@{jokes/edit/{id} (id=${user.userId})}" style="display:none">Edit</a>
+                        <a class="btn delete-btn" th:href="@{jokes/delete/{id} (id=${user.userId})}" style="display:none">Delete</a>
+                    </p>
+                    <p th:case="*"> <!-- その他の場合は表示する -->
+                        <a class="btn edit-btn" th:href="@{jokes/edit/{id} (id=${user.userId})}">Edit</a>
+                        <a class="btn delete-btn" th:href="@{jokes/delete/{id} (id=${user.userId})}">Delete</a>
+                    </p>
+                </div>
             </td>
         </form>
     </tr>
