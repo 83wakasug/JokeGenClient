@@ -17,7 +17,7 @@ public interface UserInterface {
 
     @GetExchange("/admin/{id}")
     ResponseEntity<?>getAUser(String jwtToken);
-    @GetExchange("/admin")
+    @GetExchange("/admin/")
     ResponseEntity<List>getAUsers(String jwtToken);
 
     @DeleteExchange("/admin/{id}")

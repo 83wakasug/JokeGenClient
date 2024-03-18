@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @SessionAttributes("userData")
@@ -24,7 +25,7 @@ public class UserController {
 
         try {
             ResponseEntity<?> responseEntity = userService.getAUsers(userData.getToken());
-            ArrayList<UserDTO> users = (ArrayList<UserDTO>) responseEntity.getBody();
+            List<UserDTO> users = (List<UserDTO>) responseEntity.getBody();
             model.addAttribute("users", users);
 
         } catch (Exception e) {

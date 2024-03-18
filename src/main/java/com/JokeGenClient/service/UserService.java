@@ -18,7 +18,7 @@ import java.util.Map;
 public class UserService implements UserInterface {
     private final RestClient restClient;
     private final Token tokenHeader;
-    private final String ADMIN="/admin";
+    private final String ADMIN="/admin/";
     private final String ADMINID="/admin/{id}";
 
 
