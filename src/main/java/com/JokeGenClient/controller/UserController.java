@@ -73,7 +73,7 @@ public class UserController {
     }
 
     @PostMapping("/edit")
-    public String updateUser(Model model, @ModelAttribute("userData") UserData userData,@ModelAttribute @Validated UserDTO user) {
+    public String updateUser(Model model, @ModelAttribute("userData") UserData userData,@ModelAttribute @Validated UserDTO user,BindingResult bindingResult) {
 
         try {
             model.addAttribute("user", user);

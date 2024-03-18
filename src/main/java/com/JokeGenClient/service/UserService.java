@@ -62,7 +62,7 @@ public class UserService implements UserInterface {
         System.out.println(user+"service class");
         Map<String, Object> uriVariables = Collections.singletonMap("id", user.getUserId());
         return restClient.put()
-                .uri(ADMINID,uriVariables)
+                .uri("/admin/toggleRights/{id}",uriVariables)
                 .headers(httpHeaders -> httpHeaders.addAll(tokenHeader.createHeader(jwtToken)))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)

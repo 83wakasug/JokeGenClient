@@ -22,7 +22,7 @@
     <label class="text-danger" th:text="${error}"></label>
 </div>
 
-<form th:action="@{/jokes/users/edit}"   th:method="post">
+<form th:action="@{/jokes/users/edit}" th:object="${user}"  th:method="post">
     <input type="hidden"  name="userId" th:value="${user.userId}" />
     <input type="hidden" name="username" th:value="${user.username}" />
 
@@ -30,11 +30,11 @@
 
         <tr>
             <td>Id<span class="text-danger"></span></td>
-            <td><span th:text="${user.userId}"> </span></td>
+            <td><span th:text="${userId}"> </span></td>
         </tr>
         <tr>
             <td>Username</td>
-            <td><span th:text="${user.username}"> </span></td>
+            <td><span th:text="${username}"> </span></td>
         </tr>
         <tr>
             <td>Authority<span class="text-danger"></span></td>
