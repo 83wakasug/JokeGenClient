@@ -30,7 +30,7 @@ public class UserService implements UserInterface {
     @Override
     public ResponseEntity<?> getAUser(String jwtToken, @PathVariable int id) {
         return restClient.get()
-                .uri(ADMINID)
+                .uri(ADMINID,id)
                 .headers(httpHeaders -> httpHeaders.addAll(tokenHeader.createHeader(jwtToken)))
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()

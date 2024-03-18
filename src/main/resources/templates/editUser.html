@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html>}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -22,8 +22,9 @@
     <label class="text-danger" th:text="${error}"></label>
 </div>
 
-<form th:action="@{jokes/users/edit}"  th:method="post">
-
+<form th:action="@{jokes/users/edit}"   th:method="post">
+    <input type="hidden" th:field="*{userId}" th:value="${userId}" />
+    <input type="hidden" th:field="*{user.username}" th:value="${user.username}" />
 
     <table>
 
@@ -33,21 +34,22 @@
         </tr>
         <tr>
             <td>Username</td>
-            <td><span th:text="${username}"> </span></td>
+            <td><span th:text="${user.username}"> </span></td>
         </tr>
         <tr>
             <td>Authority<span class="text-danger"></span></td>
             <td>
-
-                <select multiple="multiple" th:field="*{authorities}" name="authorities" required>
-                    <option th:each="authority : ${user.authorities}"
-                            th:value="${authority.authority}"
-                            th:text="${authority.authority}"
-                            th:selected="${#lists.contains(user.authorities, authority)}">Admin</option>
-                    <option th:each="authority : ${user.authorities}"
-                            th:value="${authority.authority}"
-                            th:text="${authority.authority}"
-                            th:selected="${#lists.contains(user.authorities, authority)}">User</option>
+                <select required>
+                    <option
+                            th:value="Admin"
+                            th:text="USER"
+                            th:selected="${#lists.contains(user.authorities, authority)}">
+                    </option>
+                    <option
+                            th:value="User"
+                            th:text="ADMIN"
+                            th:selected="${#lists.contains(user.authorities, authority)}">
+                    </option>
                 </select>
             </td>
         </tr>

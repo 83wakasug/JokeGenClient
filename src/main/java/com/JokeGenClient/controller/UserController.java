@@ -39,13 +39,14 @@ public class UserController {
 
     @GetMapping("/edit/{id}")
     public String userEditView(Model model, @ModelAttribute("userData") UserData userData, @PathVariable int id, @ModelAttribute @Validated UserDTO user, BindingResult bindingResult) {
-
+        System.out.println(id + "id");
         try {
             ResponseEntity<?> responseEntity = userService.getAUser(userData.getToken(), id);
             user = (UserDTO) responseEntity.getBody();
+            System.out.println(user);
             model.addAttribute("user", user);
+            model.addAttribute("userData",userData);
             model.addAttribute("userId", id);
-            model.addAttribute("authorities", user.getAuthorities());
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -71,11 +72,13 @@ public class UserController {
         return "userDetails";
     }
 
-    @PostMapping("/update")
+    @PostMapping("/edit")
     public String updateUser(Model model, @ModelAttribute("userData") UserData userData,@ModelAttribute @Validated UserDTO user) {
 
         try {
             model.addAttribute("user", user);
+            System.out.println(user.getUserId() );
+            System.out.println( user.getAuthorities() + user.getUsername());
             userService.updateAUser(user,userData.getToken());
 
         } catch (Exception e) {
