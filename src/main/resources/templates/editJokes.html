@@ -1,0 +1,55 @@
+<!DOCTYPE html>}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User details</title>
+</head>
+<body>
+<nav>
+  <ul class="index">
+    <li><a href="http://localhost:8080/jokes/index">Main page</a></li>
+    <li><a href="http://localhost:8080/jokes/searchEntry">Search Entry</a></li>
+    <li><a href="http://localhost:8080/jokes/list">List All Entries</a></li>
+    <li><a href="http://localhost:8080/jokes/create">Create an Entry</a></li>
+    <div th:switch="${userData.roles}" th:case="ADMIN">
+      <li><a href="http://localhost:8080/jokes/edit">Update/Delete an Entry</a></li>
+      <li><a href="http://localhost:8080/jokes/users">Update/Delete Users</a></li>
+    </div>
+  </ul>
+</nav>
+
+<div th:if="${validationError}" th:each="error : ${validationError}">
+  <label class="text-danger" th:text="${error}"></label>
+</div>
+
+<form th:action="@{/jokes/edit}" th:object="${joke}"  th:method="post">
+  <input type="hidden"  name="id" th:value="${joke.id}" />
+  <input type="hidden" name="author" th:value="${joke.author}" />
+
+  <table>
+
+    <tr>
+      <td>Id<span class="text-danger"></span></td>
+      <td><span th:text="${id}"> </span></td>
+    </tr>
+    <tr>
+      <td>Joke</td>
+      <td><input type="text" required th:field="*{joke}" /> </span></td>
+
+    </tr>
+    <tr>
+      <td>Author<span class="text-danger"></span></td>
+      <td>
+        <span th:text="${author}"> </span>
+      </td>
+    </tr>
+  </table>
+
+  <br/>
+  <div>
+    <input type="submit" value="Save" class="btn btn-primary">
+  </div>
+</form>
+</div>
+</body>
+</html>

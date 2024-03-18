@@ -34,6 +34,7 @@ public class JokesController {
             ResponseEntity<?> responseEntity = generalService.getJokes(userData.getToken());
             ArrayList<JokesDTO> jokesList = (ArrayList<JokesDTO>) responseEntity.getBody();
             model.addAttribute("jokes", jokesList);
+            model.addAttribute("userdata", userData);
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -58,7 +59,7 @@ public class JokesController {
     public String addJoke(@ModelAttribute("userData") UserData userData, Model model, @ModelAttribute @Validated JokesForm jokesForm) {
         try {
 
-            model.addAttribute("joke", jokesForm);
+            model.addAttribute("jokes", jokesForm);
             AuthorDTO author = findAuthoer(jokesForm.getAuthor(), userData);
 
 
@@ -74,9 +75,31 @@ public class JokesController {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return "addJokes";
+        return "redirect:/jokes/list";
     }
 
+    @PostMapping("/edit")
+    public String updateJokes(@ModelAttribute("userData") UserData userData, Model model, @ModelAttribute @Validated JokesForm jokesForm) {
+        try {
+
+            model.addAttribute("joke", jokesForm);
+            AuthorDTO author = findAuthoer(jokesForm.getAuthor(), userData);
+
+
+            int authorid;
+            if (author.getName()==null) {
+                authorid = addAuthor(jokesForm, userData);
+            }
+            else{authorid = author.getId();}
+            author.setId(authorid);
+            generalService.postJokes(userData.getToken(), createAddJokesForm(jokesForm,authorid));
+
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return "addJokes";
+    }
 
     private AuthorDTO findAuthoer(String name, UserData userdata) {
         try {
@@ -104,6 +127,21 @@ public class JokesController {
 
         }
         return new AuthorDTO();
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteJokes(Model model, @ModelAttribute("userData") UserData userData,@ModelAttribute @Validated JokesForm jokesForm,@PathVariable int id) {
+        System.out.println(id+"test");
+        try {
+            model.addAttribute("jokes", jokesForm);
+            model.addAttribute("userdata", userData);
+            generalService.deleteJokes(id, userData.getToken());
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        return "redirect:/jokes/list";
     }
 
     private int addAuthor(JokesForm jokesForm, UserData userdata) {

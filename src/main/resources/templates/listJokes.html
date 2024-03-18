@@ -30,20 +30,33 @@
     <tr th:if="${jokes.empty}">
         <td colspan="2"> Do not find any information </td>
     </tr>
+
+
     <tr th:each="jokes : ${jokes}">
-        <td><span th:text="${jokes.joke}"> joke </span></td>
-        <td><span th:text="${jokes.author.name}"> author </span></td>
+        <form th:action="@{/jokes/delete/{id}(id=${jokes.id})}" method="get">
+            <input type="hidden" name="_method" value="delete"/>
+            <td>
+                <span th:text="${jokes.joke}"> joke </span>
+            </td>
+            <td>
+                <span th:text="${jokes.author.name}"> author </span>
+            </td>
+            <td>
+                <div th:switch="${userData.roles}">
+                    <p th:case="ADMIN"> <!-- ADMINの場合は表示にする -->
+                        <a class="btn edit-btn" th:href="@{/jokes/edit/{id}(id=${jokes.id})}">Edit</a>
+                        <button type="submit" class="btn delete-btn">Delete</button>
+                    </p>
+                    <p th:case="*" style="display:none"> <!-- その他の場合は非表示にする -->
+                        <a class="btn edit-btn" th:href="@{/jokes/edit/{id}(id=${jokes.id})}" style="display:none">Edit</a>
+                        <a class="btn delete-btn" th:href="@{/jokes/delete/{id}(id=${jokes.id})}" style="display:none">Delete</a>
+                    </p>
+                </div>
+            </td>
+        </form>
     </tr>
-    <div th:switch="${user.username}">
-        <p th:case="admin" style="display:none"> <!-- ADMINの場合は表示にする -->
-            <a class="btn edit-btn" th:href="@{/jokes/users/edit/{id}(id=${user.userId})}" >Edit</a>
-            <a class="btn delete-btn" th:href="@{/users/delete/{id} (id=${user.userId})}" >Delete</a>
-        </p>
-        <p th:case="*"> <!-- その他の場合は非表示にする -->
-            <a class="btn edit-btn" th:href="@{/jokes/users/edit/{id}(id=${user.userId})}" style="display:none">Edit</a>
-            <a class="btn delete-btn" th:href="@{/jokes/users/delete/{id} (id=${user.userId})} " style="display:none">Delete</a>
-        </p>
-    </div>
+
+    </form>
     </tbody>
 </table>
 </body>

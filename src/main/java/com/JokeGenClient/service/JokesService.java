@@ -1,10 +1,7 @@
 package com.JokeGenClient.service;
 
 import com.JokeGenClient.client.JokeGenInterface;
-import com.JokeGenClient.form.AddJokesForm;
-import com.JokeGenClient.form.AuthorDTO;
-import com.JokeGenClient.form.JokesForm;
-import com.JokeGenClient.form.UserDTO;
+import com.JokeGenClient.form.*;
 import com.JokeGenClient.token.Token;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -48,7 +45,7 @@ public class JokesService implements JokeGenInterface {
     public ResponseEntity<?> getAJokes(int id,String jwtToken) {
 
         return restClient.get()
-                .uri("/jokes/{id}")
+                .uri("/jokes/{id}",id)
                 .headers(httpHeaders -> httpHeaders.addAll(tokenHeader.createHeader(jwtToken)))
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
@@ -60,7 +57,7 @@ public class JokesService implements JokeGenInterface {
     public ResponseEntity<?> updateJokes(String jwtToken, AuthorDTO author) {
           Map<String, Object> uriVariables = Collections.singletonMap("id", author.getId());
         return restClient.put()
-                .uri("/{id}",uriVariables)
+                .uri("/jokes/{id}",uriVariables)
                 .headers(httpHeaders -> httpHeaders.addAll(tokenHeader.createHeader(jwtToken)))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
@@ -72,10 +69,10 @@ public class JokesService implements JokeGenInterface {
     @Override
     public ResponseEntity<?> deleteJokes(int id,String jwtToken) {
         return restClient.delete()
-                .uri("/{id}",id)
+                .uri("/jokes/{id}",id)
                 .headers(httpHeaders -> httpHeaders.addAll(tokenHeader.createHeader(jwtToken)))
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
-                .toEntity(AuthorDTO.class);
+                .toEntity(JokesForm.class);
     }
 }
