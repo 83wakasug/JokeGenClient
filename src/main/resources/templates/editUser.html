@@ -22,15 +22,15 @@
     <label class="text-danger" th:text="${error}"></label>
 </div>
 
-<form th:action="@{jokes/users/edit}"   th:method="post">
-    <input type="hidden" th:field="*{userId}" th:value="${userId}" />
-    <input type="hidden" th:field="*{user.username}" th:value="${user.username}" />
+<form th:action="@{/jokes/users/edit}"   th:method="post">
+    <input type="hidden"  name="userId" th:value="${user.userId}" />
+    <input type="hidden" name="username" th:value="${user.username}" />
 
     <table>
 
         <tr>
             <td>Id<span class="text-danger"></span></td>
-            <td><span th:text="${userId}"> </span></td>
+            <td><span th:text="${user.userId}"> </span></td>
         </tr>
         <tr>
             <td>Username</td>
@@ -39,14 +39,14 @@
         <tr>
             <td>Authority<span class="text-danger"></span></td>
             <td>
-                <select required>
+                <select name="authorities" required>
                     <option
-                            th:value="Admin"
+                            th:value="USER"
                             th:text="USER"
                             th:selected="${#lists.contains(user.authorities, authority)}">
                     </option>
                     <option
-                            th:value="User"
+                            th:value="ADMIN"
                             th:text="ADMIN"
                             th:selected="${#lists.contains(user.authorities, authority)}">
                     </option>

@@ -85,7 +85,7 @@ public class UserController {
             System.out.println(e.getMessage());
         }
 
-        return "redirect:";
+        return "redirect:/jokes/users";
     }
 
 }
