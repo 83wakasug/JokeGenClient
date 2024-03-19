@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.client.HttpClientErrorException;
 
 @Controller
@@ -82,6 +83,12 @@ public class LoginController {
         user.setUsername(decode.parseJason(user.getToken(),"sub"));
         user.setRoles(decode.parseJason(user.getToken(),"roles"));
         return user;
+    }
+
+    @GetMapping("/logout")
+    public String logout(Model model, @ModelAttribute @Validated LoginForm login, SessionStatus sessionStatus) {
+        sessionStatus.setComplete();
+        return "redirect:/jokes/login";
     }
 
 }
