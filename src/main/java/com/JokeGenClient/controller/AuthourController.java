@@ -51,18 +51,16 @@ public class AuthourController {
         return "editAuthor";
     }
 
-    @GetMapping("/author/delete")
-    public String deleteAuthor(Model model, @ModelAttribute("userData") UserData userData, @ModelAttribute AuthorDTO author){
-
-        model.addAttribute("author",author);
+    @GetMapping("/author/delete/{id}")
+    public String deleteAuthor(Model model, @ModelAttribute("userData") UserData userData,int id ){
         try{
-            authorService.deleteAuthor(userData.getToken(), author.getId());
+            authorService.deleteAuthor(userData.getToken(), id);
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
 
 
-        return "redirect:/author";
+        return "redirect:/jokes/author";
     }
 
     @PostMapping("/author/edit")

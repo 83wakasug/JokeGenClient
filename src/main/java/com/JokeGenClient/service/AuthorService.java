@@ -61,6 +61,7 @@ public class AuthorService implements AuthorInterface {
 
         return restClient.delete()
                 .uri("/author/{id}",id)
+                .headers(httpHeaders -> httpHeaders.addAll(tokenHeader.createHeader(jwtToken)))
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
                 .toEntity(AuthorDTO.class);
