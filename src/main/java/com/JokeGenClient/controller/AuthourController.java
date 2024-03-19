@@ -35,11 +35,12 @@ public class AuthourController {
     }
 
     @GetMapping("/author/edit/{id}")
-    public String authorEditView(Model model, @ModelAttribute("userData") UserData userData,@ModelAttribute @Validated AuthorDTO author,@PathVariable int id) {
+    public String authorEditView(Model model, @ModelAttribute("userData") UserData userData,@PathVariable int id) {
         try{
+            ResponseEntity<?>responseEntity= authorService.getAuthor(userData.getToken(), id);
+            AuthorDTO author = (AuthorDTO) responseEntity.getBody();
             model.addAttribute("userdata",userData);
             model.addAttribute("author",author);
-           ResponseEntity<?>responseEntity= authorService.getAuthor(userData.getToken(), author.getId());
         }
 
         catch (Exception e){
