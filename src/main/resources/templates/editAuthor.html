@@ -23,19 +23,18 @@
     <label class="text-danger" th:text="${error}"></label>
 </div>
 
-<form th:action="@{/author/edit}" th:object="${author}"  th:method="post">
-    <input type="hidden"  name="id" th:value="${id}" />
+<form th:action="@{/jokes/author/edit}" th:object="${author}"  th:method="post">
+    <input type="hidden"  name="id" th:value="${author.id}" />
 
     <table>
-
         <tr>
             <td>Id<span class="text-danger"></span></td>
-            <td><span th:text="${id}"> </span></td>
+            <td><span th:text="${author.id}"> </span></td>
         </tr>
         <tr>
             <td>Author<span class="text-danger"></span></td>
             <td>
-                <span> <input type="text" name="name" required th:field="*{name}" /> </span>
+                <span><input type="text" name="name" required th:field="*{name}" /></span>
             </td>
         </tr>
     </table>
@@ -45,6 +44,5 @@
         <input type="submit" value="Save" class="btn btn-primary">
     </div>
 </form>
-</div>
 </body>
 </html>

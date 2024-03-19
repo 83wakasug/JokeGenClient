@@ -43,7 +43,6 @@ public class UserController {
         try {
             ResponseEntity<?> responseEntity = userService.getAUser(userData.getToken(), id);
             user = (UserDTO) responseEntity.getBody();
-            System.out.println(user);
             model.addAttribute("user", user);
             model.addAttribute("userData",userData);
             model.addAttribute("userId", id);

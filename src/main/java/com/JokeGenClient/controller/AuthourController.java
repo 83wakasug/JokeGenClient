@@ -41,7 +41,7 @@ public class AuthourController {
             AuthorDTO author = (AuthorDTO) responseEntity.getBody();
             model.addAttribute("userdata",userData);
             model.addAttribute("author",author);
-            model.addAttribute("id", id);
+
         }
 
         catch (Exception e){
@@ -66,7 +66,8 @@ public class AuthourController {
     }
 
     @PostMapping("/author/edit")
-    public String authorEdit(Model model, @ModelAttribute("userData") UserData userData, @ModelAttribute AuthorDTO author) {
+    public String authorEdit(Model model, @ModelAttribute("userData") UserData userData, AuthorDTO author) {
+
         model.addAttribute("author", author);
 
         try {
@@ -74,7 +75,7 @@ public class AuthourController {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return "redirect:/author";
+        return "redirect:/jokes/author";
     }
 
 

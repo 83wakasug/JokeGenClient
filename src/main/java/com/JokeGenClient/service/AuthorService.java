@@ -24,7 +24,7 @@ public class AuthorService implements AuthorInterface {
     @Override
     public ResponseEntity<?> getAuthor(String jwtToken,int id) {
         return restClient.get()
-                .uri("/author/{id}")
+                .uri("/author/{id}",id)
                 .headers(httpHeaders -> httpHeaders.addAll(tokenHeader.createHeader(jwtToken)))
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
