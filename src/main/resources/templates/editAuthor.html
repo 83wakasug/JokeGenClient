@@ -24,7 +24,7 @@
 </div>
 
 <form th:action="@{/author/edit}" th:object="${author}"  th:method="post">
-    <input type="hidden"  name="id" th:value="${author.id}" />
+    <input type="hidden"  name="id" th:value="${id}" />
 
     <table>
 
@@ -35,7 +35,7 @@
         <tr>
             <td>Author<span class="text-danger"></span></td>
             <td>
-                <span> <input type="text" required th:field="*{author.name}" /> </span>
+                <span> <input type="text" name="name" required th:field="*{name}" /> </span>
             </td>
         </tr>
     </table>

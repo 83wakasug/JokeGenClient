@@ -41,6 +41,7 @@ public class AuthourController {
             AuthorDTO author = (AuthorDTO) responseEntity.getBody();
             model.addAttribute("userdata",userData);
             model.addAttribute("author",author);
+            model.addAttribute("id", id);
         }
 
         catch (Exception e){
@@ -51,7 +52,7 @@ public class AuthourController {
     }
 
     @GetMapping("/author/delete")
-    public String deleteAuthor(Model model, @ModelAttribute("userData") UserData userData, AuthorDTO author){
+    public String deleteAuthor(Model model, @ModelAttribute("userData") UserData userData, @ModelAttribute AuthorDTO author){
 
         model.addAttribute("author",author);
         try{
@@ -65,15 +66,16 @@ public class AuthourController {
     }
 
     @PostMapping("/author/edit")
-    public String authorEdit(Model model,@ModelAttribute("userData") UserData userData,@RequestBody AuthorDTO author){
-        model.addAttribute("author",author);
+    public String authorEdit(Model model, @ModelAttribute("userData") UserData userData, @ModelAttribute AuthorDTO author) {
+        model.addAttribute("author", author);
 
-        try{
-            authorService.updateAuthor(userData.getToken(),author);
-        }catch (Exception e){
+        try {
+            authorService.updateAuthor(userData.getToken(), author);
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         return "redirect:/author";
     }
+
 
 }
