@@ -88,7 +88,13 @@ form table td {
 }
 
 form input[type="text"] {
-    width: 100%;
+    width: 60%;
+    padding: 8px;
+    box-sizing: border-box;
+    margin-top: 5px;
+}
+form input[type="password"] {
+    width: 60%;
     padding: 8px;
     box-sizing: border-box;
     margin-top: 5px;
@@ -180,4 +186,21 @@ form input[type="text"] {
 }
 #center{
     text-align: center;
+}
+
+.form-control {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    margin-top: 5px;
+}
+
+.place {
+    width: 80%;
+    margin: 0px auto;
+}
+
+#headerSignup,
+#headerLogin {
+    margin-left: 10%; /* 任意の左マージンを設定 */
 }

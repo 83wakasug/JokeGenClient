@@ -11,10 +11,9 @@
 <div id="flex">
     <div id="register">
         <h2 id="headerSignup">Sign up </h2>
-        <p>If you are not registered, sign up now!</p>
         <form th:action="@{/jokes/signup}" method="get">
             <div id="signup">
-                <input type="submit" value="sign up" id="signupbutton">
+                <input  type="submit" value="sign up" class=" btn btn-primary">
             </div>
         </form>
     </div>
@@ -31,8 +30,8 @@
             <label>
                 <input type="password" placeholder="Password" th:field="*{password}" class="input-box">
             </label>
-            <div id="submit">
-                <input type="submit" value="login" id="loginButton">
+            <div id="submit" >
+              <p>  <input class=" btn btn-primary" type="submit" value="login" id="loginButton"> </p>
             </div>
             <div th:if="${errorMsg != null}" style="color: red;">Error: <span th:text="${errorMsg}"></span></div>
 

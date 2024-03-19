@@ -53,14 +53,14 @@ public class JokesService implements JokeGenInterface {
     }
 
     @Override
-    public ResponseEntity<?> updateJokes(String jwtToken, AuthorDTO author) {
-          Map<String, Object> uriVariables = Collections.singletonMap("id", author.getId());
+    public ResponseEntity<?> updateJokes(String jwtToken,EditJoke jokes) {
+          Map<String, Object> uriVariables = Collections.singletonMap("id", jokes.getId());
         return restClient.put()
                 .uri("/jokes/{id}",uriVariables)
                 .headers(httpHeaders -> httpHeaders.addAll(tokenHeader.createHeader(jwtToken)))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
-                .body(author)
+                .body(jokes)
                 .retrieve()
                 .toEntity(JokesDTO.class);
     }

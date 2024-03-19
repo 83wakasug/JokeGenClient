@@ -1,8 +1,6 @@
 package com.JokeGenClient.client;
 
-import com.JokeGenClient.form.AddJokesForm;
-import com.JokeGenClient.form.AuthorDTO;
-import com.JokeGenClient.form.LoginForm;
+import com.JokeGenClient.form.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,7 +24,7 @@ public interface JokeGenInterface {
     ResponseEntity<?> getAJokes(@PathVariable int id,String jwtToken);
 
     @PutExchange("/jokes")
-    ResponseEntity<?>updateJokes(String jwtToken, @RequestBody AuthorDTO authorDTO);
+    ResponseEntity<?>updateJokes(String jwtToken, @RequestBody EditJoke jokes);
 
     @DeleteExchange("/jokes/{id}")
     ResponseEntity<?> deleteJokes(@PathVariable int id,String jwtToken);

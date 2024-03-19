@@ -4,6 +4,7 @@ import com.JokeGenClient.form.LoginForm;
 import com.JokeGenClient.form.SignupForm;
 import com.JokeGenClient.form.UserData;
 import com.JokeGenClient.service.AuthService;
+import com.JokeGenClient.service.UserService;
 import com.JokeGenClient.token.DecodeToken;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -13,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
@@ -25,6 +27,7 @@ import org.springframework.web.client.HttpClientErrorException;
 public class LoginController {
     private final AuthService authService;
     private final DecodeToken decode;
+    private final UserService userService;
     private final String ERRORMSG="wrong username or password";
     @GetMapping("/login")
     public String loginView(Model model,@ModelAttribute @Validated LoginForm login) {
@@ -45,7 +48,7 @@ public class LoginController {
             }
         }
 
-        if (response.getStatusCode().is2xxSuccessful()) {
+        if (response != null && response.getStatusCode().is2xxSuccessful()) {
             // Get the response body
             Object responseBody = response.getBody();
             if (responseBody != null) {
@@ -55,8 +58,9 @@ public class LoginController {
                 session.setAttribute("userData", userData);
                 return "redirect:/jokes/index";
             }
-        }
 
+        }
+        model.addAttribute("errorMsg", "Please enter correct username and password");
         return "login";
     }
 
@@ -67,13 +71,20 @@ public class LoginController {
     }
 
     @PostMapping("/signup")
-    public String signup(Model model,@ModelAttribute @Validated SignupForm signupForm) {
-        model.addAttribute("signup", signupForm);
-        var response = authService.signup(signupForm);
-        if (response.getStatusCode().is2xxSuccessful()) {
-            return "redirect:/jokes/login?success=User successfully registered!";
-        } else {
-            return "redirect:/jokes/login?error=User registration failed. Please try again.";
+    public String signup(Model model, @ModelAttribute @Validated SignupForm signupForm, BindingResult bdResult) {
+       try {
+           var response = authService.signup(signupForm);
+           model.addAttribute("signup", signupForm);
+
+               return "redirect:/jokes/login";
+
+
+       }catch(HttpClientErrorException e)
+       {
+           if (e.getStatusCode().equals(HttpStatus.UNAUTHORIZED)) {
+               model.addAttribute("errorMsg", "Username already exists or Password does not meet the requirements.");
+       }
+        return "signup";
         }
     }
 

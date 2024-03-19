@@ -61,7 +61,7 @@ public class JokesController {
         try {
 
             model.addAttribute("jokes", jokesForm);
-            AuthorDTO author = findAuthoer(jokesForm.getAuthor(), userData);
+            AuthorDTO author = findAuthor(jokesForm.getAuthor(), userData);
 
 
             int authorid;
@@ -104,7 +104,7 @@ public class JokesController {
         try {
 
             model.addAttribute("joke", jokesForm);
-            AuthorDTO author = findAuthoer(jokesForm.getAuthor(), userData);
+            AuthorDTO author = findAuthor(jokesForm.getAuthor(), userData);
 
 
             int authorid;
@@ -113,16 +113,18 @@ public class JokesController {
             }
             else{authorid = author.getId();}
             author.setId(authorid);
-            generalService.postJokes(userData.getToken(), createAddJokesForm(jokesForm,authorid));
+            EditJoke joke = new EditJoke();
+            mapper.map(jokesForm,joke);
+            generalService.updateJokes(userData.getToken(), joke);
 
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return "addJokes";
+        return "redirect:/jokes/list";
     }
 
-    private AuthorDTO findAuthoer(String name, UserData userdata) {
+    private AuthorDTO findAuthor(String name, UserData userdata) {
         try {
             ResponseEntity<List> responseEntity = authorService.getAuthors(userdata.getToken());
             List<AuthorDTO> authorsList = new ArrayList<>();
