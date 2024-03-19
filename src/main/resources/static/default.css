@@ -1,0 +1,183 @@
+/* Reset some default browser styles */
+body, h2, label, button {
+    margin: 0;
+    padding: 0;
+}
+#h2{
+    text-align:center;
+}
+
+body {
+    font-family: "Times New Roman", times, Serif;
+}
+
+.top {
+    height: 50px;
+    background: black;
+    color: aliceblue;
+}
+
+nav {
+    width: 100%;
+    height: 70px;
+    background-color: dimgray;
+    padding-top: 10px;
+    box-sizing: border-box;
+    top: 0;
+    left: 0;
+}
+
+ul {
+    display: flex;
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    list-style: none;
+}
+
+a {
+    display: block;
+    text-decoration: none;
+    font-size: 18px;
+    color: white;
+    margin-right: 25px;
+    padding: 10px;
+}
+
+a:hover {
+    color: rgb(214, 237, 248);
+}
+
+table {
+    width: 80%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+/* Style the form */
+form {
+    width: 80%;
+    margin: 20px auto;
+}
+
+form table {
+    width: 100%;
+    margin: 0;
+    border-collapse: collapse;
+}
+
+form table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+form input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    margin-top: 5px;
+}
+
+.edit-btn,
+.delete-btn {
+    display: inline-block;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    margin-right: 5px;
+    cursor: pointer;
+    color: #fff;
+}
+
+.edit-btn {
+    background-color: dodgerblue;
+}
+
+.delete-btn {
+    background-color: dimgray;
+}
+
+.delete-btn:hover{
+    background-color: darkgray;
+}
+.edit-btn:hover {
+    background-color: deepskyblue;
+}
+
+/* Primary button style */
+.btn-primary {
+    background-color: dodgerblue;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: deepskyblue;
+}
+
+/* Secondary button style */
+.btn-secondary {
+    background-color: darkgray;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.btn-secondary:hover {
+    background-color: dimgray;
+}
+
+.form-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Additional styling for details button */
+.btn-details {
+    background-color: dodgerblue;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    margin-right: 120px;
+}
+
+.btn-search{
+    background-color: dodgerblue;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    display:inline-block;
+}
+
+.btn-search:hover {
+    background-color: deepskyblue;
+}
+#center{
+    text-align: center;
+}

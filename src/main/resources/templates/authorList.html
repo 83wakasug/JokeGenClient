@@ -2,18 +2,20 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>AuthorList</title>
+    <title>Author List</title>
+    <link rel="stylesheet" th:href="@{/default.css}">
 </head>
 <body>
 
 <nav>
     <ul class="index">
         <li><a href="http://localhost:8080/jokes/index">Main page</a></li>
-        <li><a href="http://localhost:8080/jokes/searchEntry">Search Entry</a></li>
         <li><a href="http://localhost:8080/jokes/list">List All Entries</a></li>
         <li><a href="http://localhost:8080/jokes/create">Create an Entry</a></li>
         <div th:switch="${userData.roles}" th:case="ADMIN">
             <li><a href="http://localhost:8080/jokes/author">Update/Delete an Entry</a></li>
+        </div>
+        <div th:switch="${userData.roles}" th:case="ADMIN">
             <li><a href="http://localhost:8080/jokes/users">Update/Delete Users</a></li>
         </div>
         <li><a href="http://localhost:8080/jokes/logout">logout</a></li>

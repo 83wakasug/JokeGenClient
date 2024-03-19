@@ -2,7 +2,8 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>User details</title>
+    <title>Edit User</title>
+    <link rel="stylesheet" th:href="@{/default.css}">
 </head>
 <body>
 <nav>
@@ -12,6 +13,8 @@
         <li><a href="http://localhost:8080/jokes/create">Create an Entry</a></li>
         <div th:switch="${userData.roles}" th:case="ADMIN">
             <li><a href="http://localhost:8080/jokes/author">Update/Delete an Entry</a></li>
+        </div>
+        <div th:switch="${userData.roles}" th:case="ADMIN">
             <li><a href="http://localhost:8080/jokes/users">Update/Delete Users</a></li>
         </div>
         <li><a href="http://localhost:8080/jokes/logout">logout</a></li>
@@ -31,11 +34,11 @@
 
         <tr>
             <td>Id<span class="text-danger"></span></td>
-            <td><span th:text="${userId}"> </span></td>
+            <td><span th:text="${user.userId}"> </span></td>
         </tr>
         <tr>
             <td>Username</td>
-            <td><span th:text="${username}"> </span></td>
+            <td><span th:text="${user.username}"> </span></td>
         </tr>
         <tr>
             <td>Authority<span class="text-danger"></span></td>
