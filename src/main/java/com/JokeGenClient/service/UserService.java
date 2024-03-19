@@ -59,7 +59,6 @@ public class UserService implements UserInterface {
 
     @Override
     public ResponseEntity<?> updateAUser(UserDTO user,String jwtToken) {
-        System.out.println(user+"service class");
         Map<String, Object> uriVariables = Collections.singletonMap("id", user.getUserId());
         return restClient.put()
                 .uri("/admin/toggleRights/{id}",uriVariables)

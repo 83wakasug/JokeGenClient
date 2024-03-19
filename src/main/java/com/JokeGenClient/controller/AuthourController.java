@@ -1,15 +1,13 @@
 package com.JokeGenClient.controller;
 
-import com.JokeGenClient.form.AuthorForm;
-import com.JokeGenClient.form.LoginForm;
+import com.JokeGenClient.form.AuthorDTO;
+import com.JokeGenClient.form.UserData;
+import com.JokeGenClient.service.AuthorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @SessionAttributes("userData")
@@ -17,11 +15,26 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 @RequiredArgsConstructor
 
 public class AuthourController {
+    private final AuthorService authorService;
     @GetMapping("/author")
-    public String authourListView(Model model, @ModelAttribute @Validated AuthorForm author) {
+    public String authourListView(Model model, @ModelAttribute @Validated AuthorDTO author) {
         model.addAttribute("author",author);
 
         return "author";
+    }
+
+    @GetMapping("/delete")
+    public String deleteAuthor(Model model, @ModelAttribute("userData") UserData userData, AuthorDTO author){
+
+        model.addAttribute("author",author);
+
+        return "redirect:/author";
+    }
+
+    @PostMapping("/edit")
+    public String authorEdit(Model model,@ModelAttribute("userData") UserData userData){
+
+        return "redirect:/author";
     }
 
 }

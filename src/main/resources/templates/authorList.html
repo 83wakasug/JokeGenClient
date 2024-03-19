@@ -17,6 +17,9 @@ nav>
     </div>
 </ul>
 </nav>
+
+<form th:action="@{/jokes/edit}" th:object="${author}"  th:method="post">
+    <input type="hidden"  name="id" th:value="${author.id}" />
 <table>
     <thead>
     <tr>
