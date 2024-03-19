@@ -17,23 +17,35 @@ import org.springframework.web.bind.annotation.*;
 public class AuthourController {
     private final AuthorService authorService;
     @GetMapping("/author")
-    public String authourListView(Model model, @ModelAttribute @Validated AuthorDTO author) {
+    public String authourListView(Model model, @ModelAttribute("userData") UserData userData,@ModelAttribute @Validated AuthorDTO author) {
         model.addAttribute("author",author);
-
+        model.addAttribute("userdata", userData);
         return "author";
     }
 
-    @GetMapping("/delete")
+    @GetMapping("author/delete")
     public String deleteAuthor(Model model, @ModelAttribute("userData") UserData userData, AuthorDTO author){
 
         model.addAttribute("author",author);
+        try{
+            authorService.deleteAuthor(userData.getToken(), author.getId());
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
 
         return "redirect:/author";
     }
 
-    @PostMapping("/edit")
-    public String authorEdit(Model model,@ModelAttribute("userData") UserData userData){
+    @PostMapping("author/edit")
+    public String authorEdit(Model model,@ModelAttribute("userData") UserData userData,@RequestBody AuthorDTO author){
+        model.addAttribute("author",author);
 
+        try{
+            authorService.updateAuthor(userData.getToken(),author);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
         return "redirect:/author";
     }
 

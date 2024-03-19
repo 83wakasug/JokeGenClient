@@ -24,9 +24,6 @@ public class UserService implements UserInterface {
 
 
 
-
-
-
     @Override
     public ResponseEntity<?> getAUser(String jwtToken, @PathVariable int id) {
         return restClient.get()

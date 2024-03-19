@@ -5,22 +5,23 @@
     <title>AuthorList</title>
 </head>
 <body>
-nav>
-<ul class="index">
-    <li><a href="http://localhost:8080/jokes/index">Main page</a></li>
-    <li><a href="http://localhost:8080/jokes/searchEntry">Search Entry</a></li>
-    <li><a href="http://localhost:8080/jokes/list">List All Entries</a></li>
-    <li><a href="http://localhost:8080/jokes/create">Create an Entry</a></li>
-    <div th:switch="${userData.roles}" th:case="ADMIN">
-        <li><a href="http://localhost:8080/jokes/edit">Update/Delete an Entry</a></li>
-        <li><a href="http://localhost:8080/jokes/users">Update/Delete Users</a></li>
-    </div>
-</ul>
+
+<nav>
+    <ul class="index">
+        <li><a href="http://localhost:8080/jokes/index">Main page</a></li>
+        <li><a href="http://localhost:8080/jokes/searchEntry">Search Entry</a></li>
+        <li><a href="http://localhost:8080/jokes/list">List All Entries</a></li>
+        <li><a href="http://localhost:8080/jokes/create">Create an Entry</a></li>
+        <div th:switch="${userData.roles}" th:case="ADMIN">
+            <li><a href="http://localhost:8080/author">Update/Delete an Entry</a></li>
+            <li><a href="http://localhost:8080/jokes/users">Update/Delete Users</a></li>
+        </div>
+    </ul>
 </nav>
 
-<form th:action="@{/jokes/edit}" th:object="${author}"  th:method="post">
-    <input type="hidden"  name="id" th:value="${author.id}" />
+</nav>
 <table>
+
     <thead>
     <tr>
         <th> AuthorID </th>
@@ -28,13 +29,25 @@ nav>
     </tr>
     </thead>
     <tbody>
-    <tr th:if="${author.empty}">
+        <tr th:if="${author.empty}">
         <td colspan="2"> Do not find any information </td>
-    </tr>
-    <tr th:each="author : ${author}">
+        </tr>
+
+        <tr th:each="author : ${author}">
+            <form th:action="@{/author/delete/{id}(id=${author.id})}" method="get">
+                <input type="hidden"  name="id" th:value="${author.id}" />
         <td><span th:text="${author.id}"> ID </span></td>
         <td><span th:text="${author.name}"> author name </span></td>
-    </tr>
+                <td>
+                    <div>
+                        <p>
+                            <a class="btn edit-btn" th:href="@{/jokes/author/{id}(id=${author.id})}">Edit</a>
+                            <button type="submit" class="btn delete-btn">Delete</button>
+                        </p>
+                    </div>
+                </td>
+            </form>
+        </tr>
     </tbody>
 </table>
 </body>

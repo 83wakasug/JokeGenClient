@@ -71,7 +71,7 @@ public class AuthorService implements AuthorInterface {
 
         Map<String, Object> uriVariables = Collections.singletonMap("id", author.getId());
         return restClient.put()
-                .uri("/author/{id}",author.getId())
+                .uri("/author/{id}",uriVariables)
                 .headers(httpHeaders -> httpHeaders.addAll(tokenHeader.createHeader(jwtToken)))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
