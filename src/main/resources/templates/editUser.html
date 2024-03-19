@@ -12,7 +12,7 @@
         <li><a href="http://localhost:8080/jokes/list">List All Entries</a></li>
         <li><a href="http://localhost:8080/jokes/create">Create an Entry</a></li>
         <div th:switch="${userData.roles}" th:case="ADMIN">
-            <li><a href="http://localhost:8080/jokes/author">Update/Delete an Entry</a></li>
+            <li><a href="http://localhost:8080/jokes/author">Update/Delete Author</a></li>
         </div>
         <div th:switch="${userData.roles}" th:case="ADMIN">
             <li><a href="http://localhost:8080/jokes/users">Update/Delete Users</a></li>

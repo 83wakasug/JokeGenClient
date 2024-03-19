@@ -104,15 +104,6 @@ public class JokesController {
         try {
 
             model.addAttribute("joke", jokesForm);
-            AuthorDTO author = findAuthor(jokesForm.getAuthor(), userData);
-
-
-            int authorid;
-            if (author.getName()==null) {
-                authorid = addAuthor(jokesForm, userData);
-            }
-            else{authorid = author.getId();}
-            author.setId(authorid);
             EditJoke joke = new EditJoke();
             mapper.map(jokesForm,joke);
             generalService.updateJokes(userData.getToken(), joke);
