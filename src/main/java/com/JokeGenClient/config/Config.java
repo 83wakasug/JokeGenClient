@@ -11,7 +11,7 @@ public class Config {
     @Bean
     public RestClient restClient() {
         return RestClient.builder()
-                .baseUrl("http://localhost:5000/api/v1")
+                .baseUrl("http://ec2-13-53-167-112.eu-north-1.compute.amazonaws.com/api/v1")
                 .build();
     }
 
