@@ -1,8 +1,8 @@
-<!DOCTYPE html>}
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>User details</title>
+    <title>Edit Author</title>
 </head>
 <body>
 <nav>
@@ -12,7 +12,7 @@
         <li><a href="http://localhost:8080/jokes/list">List All Entries</a></li>
         <li><a href="http://localhost:8080/jokes/create">Create an Entry</a></li>
         <div th:switch="${userData.roles}" th:case="ADMIN">
-            <li><a href="http://localhost:8080/author">Update/Delete an Entry</a></li>
+            <li><a href="http://localhost:8080/jokes/author">Update/Delete an Entry</a></li>
             <li><a href="http://localhost:8080/jokes/users">Update/Delete Users</a></li>
         </div>
     </ul>

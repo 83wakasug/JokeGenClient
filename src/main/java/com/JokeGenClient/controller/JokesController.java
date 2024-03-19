@@ -87,12 +87,10 @@ public class JokesController {
             ResponseEntity<?> responseEntity =generalService.getAJokes(id,userData.getToken());
 
             jokesDTO= (JokesDTO) responseEntity.getBody();
-            System.out.println(jokesDTO);
             JokesForm jokesForm = new JokesForm();
             mapper.map(jokesDTO,jokesForm);
 
             jokesForm.setAuthor(jokesDTO.getAuthour().getName());
-            System.out.println(jokesForm);
             model.addAttribute("joke", jokesForm);
 
         } catch (Exception e) {
@@ -154,7 +152,6 @@ public class JokesController {
 
     @GetMapping("/delete/{id}")
     public String deleteJokes(Model model, @ModelAttribute("userData") UserData userData,@ModelAttribute @Validated JokesForm jokesForm,@PathVariable int id) {
-        System.out.println(id+"test");
         try {
             model.addAttribute("jokes", jokesForm);
             model.addAttribute("userdata", userData);
