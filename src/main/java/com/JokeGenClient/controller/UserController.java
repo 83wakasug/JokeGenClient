@@ -60,8 +60,6 @@ public class UserController {
 
         try {
             model.addAttribute("user", user);
-            System.out.println(user.getUserId() );
-            System.out.println( user.getAuthorities() + user.getUsername());
             userService.updateAUser(user,userData.getToken());
 
         } catch (Exception e) {

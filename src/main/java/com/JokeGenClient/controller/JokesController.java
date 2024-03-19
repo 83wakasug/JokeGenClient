@@ -127,7 +127,6 @@ public class JokesController {
             ResponseEntity<List> responseEntity = authorService.getAuthors(userdata.getToken());
             List<AuthorDTO> authorsList = new ArrayList<>();
             List<?> responseBody = responseEntity.getBody();
-            //ArrayList<AuthorDTO> authorForms = (ArrayList<AuthorDTO>) responseEntity.getBody();
             for (Object obj : responseBody) {
                 if (obj instanceof LinkedHashMap) {
                     LinkedHashMap<?, ?> map = (LinkedHashMap<?, ?>) obj;

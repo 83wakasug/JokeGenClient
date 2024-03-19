@@ -57,7 +57,6 @@ public class AuthourController {
             System.out.println(e.getMessage());
         }
 
-
         return "redirect:/jokes/author";
     }
 
