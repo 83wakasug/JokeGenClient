@@ -8,11 +8,10 @@
 <nav>
     <ul class="index">
         <li><a href="http://localhost:8080/jokes/index">Main page</a></li>
-        <li><a href="http://localhost:8080/jokes/searchEntry">Search Entry</a></li>
         <li><a href="http://localhost:8080/jokes/list">List All Entries</a></li>
         <li><a href="http://localhost:8080/jokes/create">Create an Entry</a></li>
         <div th:switch="${userData.roles}" th:case="ADMIN">
-            <li><a href="http://localhost:8080/author">Update/Delete an Entry</a></li>
+            <li><a href="http://localhost:8080/jokes/author">Update/Delete an Entry</a></li>
             <li><a href="http://localhost:8080/jokes/users">Update/Delete Users</a></li>
         </div>
     </ul>
@@ -32,7 +31,8 @@
     </tr>
 
     <tr th:each="user : ${users}">
-        <form th:action="@{jokes/users/delete/{id}(id=${user.userId})}"  method="get">
+        <form th:action="@{/jokes/users/delete/{id}(id=${user.userId})}"  method="get">
+            <input type="hidden"  name="id" th:value="${user.userId}" />
             <td><span th:text="${user.userId}"> ID </span></td>
             <td><span th:text="${user.username}"> username </span></td>
             <!-- 権限を表示するセル -->
@@ -46,11 +46,11 @@
                 <div th:switch="${user.username}">
                     <p th:case="admin" style="display:none"> <!-- ADMINの場合は非表示にする -->
                         <a class="btn edit-btn" th:href="@{/jokes/users/edit/{id}(id=${user.userId})}" style="display:none">Edit</a>
-                        <a class="btn delete-btn" th:href="@{/users/delete/{id} (id=${user.userId})}" style="display:none">Delete</a>
+                        <button type="submit" class="btn delete-btn" style="display:none" >Delete</button>
                     </p>
                     <p th:case="*"> <!-- その他の場合は表示する -->
                         <a class="btn edit-btn" th:href="@{/jokes/users/edit/{id}(id=${user.userId})}">Edit</a>
-                        <a class="btn delete-btn" th:href="@{/jokes/users/delete/{id} (id=${user.userId})}">Delete</a>
+                        <button type="submit" class="btn delete-btn">Delete</button>
                     </p>
                 </div>
             </td>

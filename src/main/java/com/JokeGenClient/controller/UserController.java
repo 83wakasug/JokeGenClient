@@ -1,6 +1,5 @@
 package com.JokeGenClient.controller;
 
-import com.JokeGenClient.form.JokesDTO;
 import com.JokeGenClient.form.UserDTO;
 import com.JokeGenClient.form.UserData;
 import com.JokeGenClient.service.UserService;
@@ -11,8 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -45,7 +42,7 @@ public class UserController {
             user = (UserDTO) responseEntity.getBody();
             model.addAttribute("user", user);
             model.addAttribute("userData",userData);
-            model.addAttribute("userId", id);
+           // model.addAttribute("userId", id);
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -57,19 +54,6 @@ public class UserController {
 
 
 
-    @DeleteMapping("/delete/{id}")
-    public String deleteUser(Model model, @ModelAttribute("userData") UserData userData,@ModelAttribute @Validated UserDTO user) {
-
-        try {
-            model.addAttribute("user", user);
-            userService.deleteAUser(user.getUserId(),userData.getToken());
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-
-        return "userDetails";
-    }
 
     @PostMapping("/edit")
     public String updateUser(Model model, @ModelAttribute("userData") UserData userData,@ModelAttribute @Validated UserDTO user,BindingResult bindingResult) {
@@ -79,6 +63,20 @@ public class UserController {
             System.out.println(user.getUserId() );
             System.out.println( user.getAuthorities() + user.getUsername());
             userService.updateAUser(user,userData.getToken());
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        return "redirect:/jokes/users";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteUser(Model model,@ModelAttribute("userData") UserData userData,@PathVariable int id) {
+
+        try {
+
+            userService.deleteAUser(id,userData.getToken());
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
