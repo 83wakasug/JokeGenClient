@@ -36,13 +36,11 @@ public class UserController {
 
     @GetMapping("/edit/{id}")
     public String userEditView(Model model, @ModelAttribute("userData") UserData userData, @PathVariable int id, @ModelAttribute @Validated UserDTO user, BindingResult bindingResult) {
-        System.out.println(id + "id");
         try {
             ResponseEntity<?> responseEntity = userService.getAUser(userData.getToken(), id);
             user = (UserDTO) responseEntity.getBody();
             model.addAttribute("user", user);
             model.addAttribute("userData",userData);
-           // model.addAttribute("userId", id);
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
